@@ -1,8 +1,5 @@
 package servlets;
-<<<<<<< HEAD
 
-=======
->>>>>>> branch 'CapstoneProject' of https://github.com/ericaboucher/Lineup.git
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,20 +7,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-<<<<<<< HEAD
-@WebServlet("/Registration")
-=======
-@WebServlet("/RegistrationServlet")
->>>>>>> branch 'CapstoneProject' of https://github.com/ericaboucher/Lineup.git
 public class RegistrationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     public RegistrationServlet() {
-<<<<<<< HEAD
-        // TODO Auto-generated constructor stub
-=======
         super();
->>>>>>> branch 'CapstoneProject' of https://github.com/ericaboucher/Lineup.git
     }
 
 	/**
