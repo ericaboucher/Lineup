@@ -24,21 +24,28 @@
   </div>
 
   <label for="fname"><b>First Name</b></label>
-  <input type="text" name="fname" placeholder="First Name">
+  <input type="text" name="fname" placeholder="First Name" required>
   <label for="lname"><b>Last Name</b></label>
-  <input type="text" name="lname" placeholder="Last Name">
+  <input type="text" name="lname" placeholder="Last Name" required>
 
   <label for="email"><b>Email</b></label>
-  <input type="text" name="email" placeholder="Email">
+  <input type="text" name="email" placeholder="Email" required>
 
   <label for="phone"><b>Phone Number</b></label>
-  <input type="text" name="phone" placeholder="Phone Number">
+  <input type="text" name="phone" placeholder="Phone Number" required>
 
   <label for="password"><b>Password</b></label>
-  <input type="password" name="password" placeholder="Password" id="password">
+  <input type="password" name="password" placeholder="Password" id="password" required>
 
   <label for="password2"><b>Confirm Password</b></label>
-  <input type="password" name="password2" placeholder="Confirm Password">
+  <input type="password" name="password2" placeholder="Confirm Password" required>
+  
+  <div class="radioButton">
+    <label for="accountType"><b>Guardian</b></label>
+    <input type="radio" name="accountType" value="Gardian" checked>
+    <label for="accountType"><b>Staff</b></label>
+    <input type="radio" name="accountType" value="Staff">
+  </div>
 
 <input type="submit" value="Login">
 </form>
