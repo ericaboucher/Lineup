@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class Guardian extends User {
     private ArrayList<Integer> children;
     
-    
     // Constructors
     public Guardian(String email, String pass) {
         super(email, pass);
