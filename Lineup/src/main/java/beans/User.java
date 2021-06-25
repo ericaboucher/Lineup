@@ -6,6 +6,7 @@ public abstract class User {
     private String password;
     private String firstName;
     private String lastName;
+    private String phoneNumber;
     
     //Constructors
     public User(String email, String pass) {
