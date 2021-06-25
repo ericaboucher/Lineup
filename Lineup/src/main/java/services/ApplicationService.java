@@ -1,6 +1,8 @@
 package services;
 
-public interface ApplicationService {
+import beans.User;
+
+public interface ApplicationService {	
 
 	public User readUser(String id);
 	
