@@ -19,15 +19,15 @@ public abstract class User {
     }
     
     // Accessors
-    public String getEmail() { return email; }
-    public String getFirstNameFirst() { return firstName + " " + lastName; }
-    public String getLastNameFirst() { return lastName + ", " + firstName; }
+    protected String getEmail() { return email; }
+    protected String getFirstNameFirst() { return firstName + " " + lastName; }
+    protected String getLastNameFirst() { return lastName + ", " + firstName; }
     
     // Modifiers
-    public void editEmail(String newEmail) { email = newEmail; }
-    public void editPassword(String newPassword) { password = newPassword; }
-    public void editFirstName(String newName) { firstName = newName; }
-    public void editLastName(String newName) { lastName = newName; }
+    protected void editEmail(String newEmail) { email = newEmail; }
+    protected void editPassword(String newPassword) { password = newPassword; }
+    protected void editFirstName(String newName) { firstName = newName; }
+    protected void editLastName(String newName) { lastName = newName; }
     
     // Verification
     public boolean verifyEmail(String e) { return e.equals(email); }
