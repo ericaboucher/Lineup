@@ -1,8 +1,12 @@
 package services;
 
+import java.util.List;
+
 import beans.User;
 
-public interface ApplicationService {	
+public interface ApplicationService {
+	
+	public List<User> readUsers();
 
 	public User readUser(String id);
 	

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Guardian extends User {
     private ArrayList<Integer> children;
     
+    
     // Constructors
     public Guardian(String email, String pass) {
         super(email, pass);
@@ -14,8 +15,8 @@ public class Guardian extends User {
         super(email, pass, fName, lName);
         children = new ArrayList<Integer>();
     }
-    
-    // Modifiers
+
+	// Modifiers
     public boolean signChildIn(Integer child) {
         return false;
     }
