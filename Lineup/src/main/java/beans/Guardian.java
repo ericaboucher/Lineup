@@ -17,10 +17,10 @@ public class Guardian extends User {
     
     // Modifiers
     public boolean signChildIn(Integer child) {
-        return false;
+        return children.contains(child);
     }
     public boolean signChildOut(Integer child) {
-        return false;
+        return children.contains(child);
     }
     public boolean addChild(Integer child) {
         children.add(child);
