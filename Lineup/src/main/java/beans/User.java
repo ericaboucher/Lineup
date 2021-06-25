@@ -1,5 +1,7 @@
 package beans;
 
+import java.util.regex.Pattern;
+
 public abstract class User {
 
     private String email;
@@ -10,13 +12,25 @@ public abstract class User {
     
     //Constructors
     public User(String email, String pass) {
-        this.email = email;
+        if(validateEmail(email)) {
+            this.email = email;
+        } else {
+            //problem
+        }
         this.password = pass;
     }
     public User(String email, String pass, String fName, String lName) {
         this(email, pass);
         firstName = fName;
         lastName = lName;
+    }
+    public User(String email, String pass, String phoneNum) {
+        this(email, pass);
+        if(validatePhoneNumber(phoneNum)) {
+            phoneNumber = phoneNum;
+        } else {
+            // problem
+        }
     }
     
     // Accessors
@@ -35,4 +49,11 @@ public abstract class User {
     public boolean logIn(String user, String pass) {  return (user.equals(email) && pass.equals(password)); }
     //public boolean logOut() { return true; }
 
+    // Data validation
+    private static boolean validateEmail(String e) {
+        return e.matches("[a-zA-Z_0-9]+@[a-zA-Z_0-9]+[.]com");
+    }
+    private static boolean validatePhoneNumber(String num) {
+        return num.matches("[0-9]{3}[-][0-9]{3}[-][0-9]{4}");
+    }
 }
