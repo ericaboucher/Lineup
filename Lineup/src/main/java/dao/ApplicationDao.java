@@ -42,7 +42,7 @@ public class ApplicationDao implements ApplicationService {
 			
 			
 			//query to get the user
-			String sql = "select * from user"
+			String sql = "select * from user";
 		}
 		
 		
