@@ -8,6 +8,7 @@ public abstract class User {
     private String phoneNumber;
     private String userType;
     
+    // For determining user type
     public static final String GUARDIAN = "guardian";
     public static final String STAFF = "staff";
     
@@ -54,7 +55,7 @@ public abstract class User {
     public String getPassword() { return password; }
     
     // Modifiers
-    public void setType(String newType) { userType = newType; }
+    public void setUserType(String newType) { userType = newType; }
     public void editFirstName(String newName) { firstName = newName; }
     public void editLastName(String newName) { lastName = newName; }
     public void editPassword(String newPassword) { password = newPassword; }
