@@ -102,7 +102,7 @@ public class ApplicationDao implements ApplicationService {
       Connection conn = DBConnection.getConnectionToDatabase();
 
       //insert query
-      String sql = "insert into user values (?, ?, ?, ?, ?, ?);";
+      String sql = "insert into user (email, password, userType, firstName, lastName, phoneNum) values (?, ?, ?, ?, ?, ?);";
       
       PreparedStatement stmt = conn.prepareStatement(sql);
       stmt.setString(1, user.getEmail());

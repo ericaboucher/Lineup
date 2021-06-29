@@ -36,7 +36,11 @@ public abstract class User {
         this.lastName = lastName;
     }
     public User(String email, String password, String userType, String firstName, String lastName, String phoneNumber) {
-        this(email, password, userType, firstName, lastName);
+        this.email = email;
+        this.password = password;
+        this.userType = userType;
+        this.firstName = firstName;
+        this.lastName = lastName;
         if(validatePhoneNumber(phoneNumber)) {
             phoneNum = phoneNumber;
         } else {

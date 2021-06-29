@@ -21,8 +21,8 @@ public class Guardian extends User {
         super(email, password, User.GUARDIAN, firstName, lastName);
         initChildrenList();
     }
-    public Guardian(String email, String password, String firstName, String lastName, String phoneNum) {
-        super(email, password, User.GUARDIAN, firstName, lastName, phoneNum);
+    public Guardian(String email, String password, String userType, String firstName, String lastName, String phoneNum) {
+        super(email, password, userType, firstName, lastName, phoneNum);
         initChildrenList();
     }
 

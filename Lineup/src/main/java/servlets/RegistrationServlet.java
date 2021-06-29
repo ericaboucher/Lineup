@@ -17,7 +17,7 @@ import dao.ApplicationDao;
 @WebServlet ("/registrationServlet")
 public class RegistrationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public User guardian;
+	public User user;
 	public String infoMessage = null;
 	
     public RegistrationServlet() {
@@ -26,15 +26,15 @@ public class RegistrationServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//collect data from form
-		String userType = request.getParameter("usertype");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
+		String userType = request.getParameter("userType");
 		String firstName = request.getParameter("firstName");
 		String lastName = request.getParameter("lastName");
 		String phoneNum = request.getParameter("phoneNum");
 
 		//if (userType == "Guardian") {
-			guardian = new Guardian(email, password, firstName, lastName, phoneNum);
+			user = new Guardian(email, password, userType, firstName, lastName, phoneNum);
 		//}else {
 			//create Staff user
 			//System.out.println("Error. No way to create staff.");
@@ -42,7 +42,7 @@ public class RegistrationServlet extends HttpServlet {
 
 		//save user to db
 		ApplicationDao dao = new ApplicationDao();
-		int rows = dao.createUser(guardian);
+		int rows = dao.createUser(user);
 
 		if(rows == 0) {
 			infoMessage = "Sorry, an error occurred.";
