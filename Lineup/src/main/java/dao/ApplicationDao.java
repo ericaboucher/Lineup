@@ -34,9 +34,11 @@ public class ApplicationDao implements ApplicationService {
 
         user = new Guardian();
         user.editEmail(set.getString("email"));
+        user.editPassword(set.getString("password"));
+        user.setUserType(set.getString("userType"));
         user.editFirstName(set.getString("firstName"));
         user.editLastName(set.getString("lastName"));
-        user.editPassword(set.getString("password"));
+        user.editPhoneNumber(set.getString("password"));
 
       }
 
@@ -118,6 +120,7 @@ public class ApplicationDao implements ApplicationService {
     }
     
     return rowsAffected;
+
   }
 
   @Override

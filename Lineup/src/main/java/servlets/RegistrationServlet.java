@@ -23,6 +23,16 @@ public class RegistrationServlet extends HttpServlet {
         super();
     }
 
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+//	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		// TODO Auto-generated method stub
+//	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//collect data from form
 		String userType = request.getParameter("usertype");
@@ -41,7 +51,11 @@ public class RegistrationServlet extends HttpServlet {
 
 		//save user to db
 		ApplicationDao dao = new ApplicationDao();
+<<<<<<< HEAD
 		int rows = dao.createUser(guardian);//need method to insert data into mysql
+=======
+		int rows = dao.;//need method to insert data into mysql
+>>>>>>> branch 'CapstoneProject' of https://github.com/ericaboucher/Lineup.git
 
 		//alert user with message if their registration was completed
 		String infoMessage = null;
