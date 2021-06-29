@@ -183,14 +183,37 @@ public class ApplicationDao implements ApplicationService {
 
   	@Override
   	public void createOrUpdateUser(User user) {
-
-User localUser = readUser(user.getEmail());
-if (localUser == null) {
-  createUser(user);
-} else {
-  updateUser(user);
-}
-
-  }
-
+  		
+  		User localUser = readUser(user.getEmail());
+  		if (localUser == null) {
+  			createUser(user);
+  		} else {
+  			updateUser(user);
+  		}
+  	}
+  	
+  	public boolean validateUser(String email, String password) {
+  		boolean isValidUser = false;
+  		try {
+  			//get db connection
+  			Connection conn = DBConnection.getConnectionToDatabase();
+  			
+  			//select query
+  			String sql = "select * from users where email=? and password=?";
+  			
+  			//set parameters with PreparedStatement
+  			PreparedStatement stmt = conn.prepareStatement(sql);
+  			stmt.setString(1, email);
+  			stmt.setString(2, password);
+  			
+  			ResultSet set = stmt.executeQuery();
+  			while(set.next()) {
+  				isValidUser = true;
+  			}
+  		}	
+  		catch(SQLException e) {
+  				e.printStackTrace();
+  			}
+  			return isValidUser;
+  	}
 }
