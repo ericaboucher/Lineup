@@ -39,6 +39,11 @@ public abstract class User {
     
     // Accessors
     public String getEmail() { return email; }
+    public String getFirstName() { return firstName; }
+    public String getLastName() { return lastName; }
+    public String getPassword() { return password;}
+    
+    
     public String getFirstNameFirst() { return firstName + " " + lastName; }
     public String getLastNameFirst() { return lastName + ", " + firstName; }
     
