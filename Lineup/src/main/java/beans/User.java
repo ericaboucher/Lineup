@@ -38,9 +38,9 @@ public abstract class User {
     }
     
     // Accessors
-    protected String getEmail() { return email; }
-    protected String getFirstNameFirst() { return firstName + " " + lastName; }
-    protected String getLastNameFirst() { return lastName + ", " + firstName; }
+    public String getEmail() { return email; }
+    public String getFirstNameFirst() { return firstName + " " + lastName; }
+    public String getLastNameFirst() { return lastName + ", " + firstName; }
     
     // Modifiers
     public void editEmail(String newEmail) { email = newEmail; }
