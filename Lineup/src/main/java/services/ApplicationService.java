@@ -10,7 +10,7 @@ public interface ApplicationService {
 
 	public User readUser(String id);
 	
-	public void createUser(User user);
+	public int createUser(User user);
 	
 	public void updateUser(User user);
 	

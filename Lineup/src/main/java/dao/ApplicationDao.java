@@ -90,14 +90,16 @@ public class ApplicationDao implements ApplicationService {
   }
 
   @Override
-  public void createUser(User user) {
+  public int createUser(User user) {
 	  int rowsAffected = 0;
 
     try{
 
       Connection conn = DBConnection.getConnectionToDatabase();
 
+      //insert query
       String sql = "insert into users (email, password, userType, firstName, lastName, phoneNum) values (?, ?, ?, ?, ?, ?);";
+      
       PreparedStatement stmt = conn.prepareStatement(sql);
       stmt.setString(1, user.getEmail());
       stmt.setString(2, user.getPassword());
@@ -106,17 +108,16 @@ public class ApplicationDao implements ApplicationService {
       stmt.setString(5, user.getLastName());
       stmt.setString(6, user.getPhoneNumber());
 
-      stmt.execute();
+      rowsAffected = stmt.executeUpdate();
 
     }catch (SQLException exception){
-
       exception.printStackTrace();
-
+      
     }catch (Exception exception){
-
-      exception.printStackTrace();
-
+    	exception.printStackTrace();
     }
+    
+    return rowsAffected;
   }
 
   @Override
