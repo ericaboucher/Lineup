@@ -29,16 +29,16 @@ public class RegistrationServlet extends HttpServlet {
 		String userType = request.getParameter("usertype");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		String firstName = request.getParameter("fname");
-		String lastName = request.getParameter("lname");
-		String phoneNumber = request.getParameter("phone");
+		String firstName = request.getParameter("firstName");
+		String lastName = request.getParameter("lastName");
+		String phoneNum = request.getParameter("phoneNum");
 
-		if (userType == "Guardian") {
-			guardian = new Guardian(email, password, firstName, lastName, phoneNumber);
-		}else {
+		//if (userType == "Guardian") {
+			guardian = new Guardian(email, password, firstName, lastName, phoneNum);
+		//}else {
 			//create Staff user
-			System.out.println("Error. No way to create staff.");
-		}
+			//System.out.println("Error. No way to create staff.");
+		//}
 
 		//save user to db
 		ApplicationDao dao = new ApplicationDao();

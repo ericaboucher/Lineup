@@ -5,7 +5,7 @@ public abstract class User {
     private String password;
     private String firstName;
     private String lastName;
-    private String phoneNumber;
+    private String phoneNum;
     private String userType;
     
     // For determining user type
@@ -14,31 +14,31 @@ public abstract class User {
     
     //Constructors
     public User() {}
-    public User(String email, String pass, String type) {
+    public User(String email, String password, String userType) {
         if(validateEmail(email)) {
             this.email = email;
         } else {
             //problem, probably fatal
         }
-        this.password = pass;
+        this.password = password;
     }
-    public User(String email, String pass, String type, String phoneNum) {
-        this(email, pass, type);
+    public User(String email, String password, String userType, String phoneNum) {
+        this(email, password, userType);
         if(validatePhoneNumber(phoneNum)) {
-            phoneNumber = phoneNum;
+            this.phoneNum = phoneNum;
         } else {
             // problem, but not fatal
         }
     }
-    public User(String email, String pass, String type, String fName, String lName) {
-        this(email, pass, type);
-        firstName = fName;
-        lastName = lName;
+    public User(String email, String password, String userType, String firstName, String lastName) {
+        this(email, password, userType);
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
-    public User(String email, String pass, String type, String fName, String lName, String phoneNum) {
-        this(email, pass, type, fName, lName);
-        if(validatePhoneNumber(phoneNum)) {
-            phoneNumber = phoneNum;
+    public User(String email, String password, String userType, String firstName, String lastName, String phoneNumber) {
+        this(email, password, userType, firstName, lastName);
+        if(validatePhoneNumber(phoneNumber)) {
+            phoneNum = phoneNumber;
         } else {
             //problem, but not fatal
         }
@@ -51,13 +51,13 @@ public abstract class User {
     public String getLastNameFirst() { return lastName + ", " + firstName; }
     public String getFirstName() { return firstName; }
     public String getLastName() { return lastName; }
-    public String getPhoneNumber() { return phoneNumber; }
+    public String getPhoneNum() { return phoneNum; }
     public String getPassword() { return password; }
     
     // Modifiers
     public void setUserType(String newType) { userType = newType; }
-    public void editFirstName(String newName) { firstName = newName; }
-    public void editLastName(String newName) { lastName = newName; }
+    public void editFirstName(String newFirstName) { firstName = newFirstName; }
+    public void editLastName(String newLastName) { lastName = newLastName; }
     public void editPassword(String newPassword) { password = newPassword; }
     public boolean editEmail(String newEmail) {
         if (validateEmail(newEmail)) {
@@ -68,7 +68,7 @@ public abstract class User {
     }
     public boolean editPhoneNumber(String newNumber) {
         if (validatePhoneNumber(newNumber)) {
-            phoneNumber = newNumber;
+            phoneNum = newNumber;
             return true;
         }
         return false;
@@ -76,7 +76,7 @@ public abstract class User {
     
     // Verification
     public boolean verifyEmail(String e) { return e.equals(email); }
-    public boolean logIn(String user, String pass) {  return (user.equals(email) && pass.equals(password)); }
+    public boolean logIn(String user, String password) {  return (user.equals(email) && password.equals(password)); }
     //public boolean logOut() { return true; }
 
     // Data validation

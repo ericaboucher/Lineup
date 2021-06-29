@@ -9,20 +9,20 @@ public class Guardian extends User {
     public Guardian() {
         initChildrenList();
     }
-    public Guardian(String email, String pass) {
-        super(email, pass, User.GUARDIAN);
+    public Guardian(String email, String password) {
+        super(email, password, User.GUARDIAN);
         initChildrenList();
     }
-    public Guardian(String email, String pass, String phoneNum) {
-        super(email, pass, User.GUARDIAN, phoneNum);
+    public Guardian(String email, String password, String phoneNum) {
+        super(email, password, User.GUARDIAN, phoneNum);
         initChildrenList();
     }
-    public Guardian(String email, String pass, String fName, String lName){
-        super(email, pass, User.GUARDIAN, fName, lName);
+    public Guardian(String email, String password, String firstName, String lastName){
+        super(email, password, User.GUARDIAN, firstName, lastName);
         initChildrenList();
     }
-    public Guardian(String email, String pass, String fName, String lName, String phoneNum) {
-        super(email, pass, User.GUARDIAN, fName, lName, phoneNum);
+    public Guardian(String email, String password, String firstName, String lastName, String phoneNum) {
+        super(email, password, User.GUARDIAN, firstName, lastName, phoneNum);
         initChildrenList();
     }
 
