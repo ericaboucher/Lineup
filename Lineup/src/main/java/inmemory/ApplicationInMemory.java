@@ -1,5 +1,7 @@
 package inmemory;
 
+import java.util.List;
+
 import beans.User;
 import services.ApplicationService;
 
@@ -34,6 +36,12 @@ public class ApplicationInMemory implements ApplicationService {
 		// TODO Auto-generated method stub
 		
 	}
+
+  @Override
+  public List<User> readUsers() {
+    // TODO Auto-generated method stub
+    return null;
+  }
 
 
 }

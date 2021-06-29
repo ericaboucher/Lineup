@@ -16,7 +16,7 @@ public class Guardian extends User {
         children = new ArrayList<Integer>();
     }
 
-	// Modifiers
+    // Modifiers
     public boolean signChildIn(Integer child) {
         return false;
     }
@@ -26,6 +26,11 @@ public class Guardian extends User {
     public boolean addChild(Integer child) {
         children.add(child);
         return true;
+    }
+    
+    public Guardian() {
+      super();
+      // TODO Auto-generated constructor stub
     }
 
 }
