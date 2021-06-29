@@ -7,6 +7,9 @@ public class Guardian extends User {
     
     
     // Constructors
+    public Guardian() {
+        initChildrenList();
+    }
     public Guardian(String email, String pass) {
         super(email, pass);
         initChildrenList();

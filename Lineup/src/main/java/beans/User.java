@@ -9,6 +9,7 @@ public abstract class User {
     private String phoneNumber;
     
     //Constructors
+    public User() {}
     public User(String email, String pass) {
         if(validateEmail(email)) {
             this.email = email;
