@@ -4,26 +4,25 @@ import java.util.ArrayList;
 
 public class Guardian extends User {
     private ArrayList<Integer> children;
-    public static final String userType = "GUARDIAN";
     
     // Constructors
     public Guardian() {
         initChildrenList();
     }
     public Guardian(String email, String pass) {
-        super(email, pass);
+        super(email, pass, User.GUARDIAN);
         initChildrenList();
     }
     public Guardian(String email, String pass, String phoneNum) {
-        super(email, pass, phoneNum);
+        super(email, pass, User.GUARDIAN, phoneNum);
         initChildrenList();
     }
     public Guardian(String email, String pass, String fName, String lName){
-        super(email, pass, fName, lName);
+        super(email, pass, User.GUARDIAN, fName, lName);
         initChildrenList();
     }
     public Guardian(String email, String pass, String fName, String lName, String phoneNum) {
-        super(email, pass, fName, lName, phoneNum);
+        super(email, pass, User.GUARDIAN, fName, lName, phoneNum);
         initChildrenList();
     }
 
