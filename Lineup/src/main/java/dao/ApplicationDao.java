@@ -91,8 +91,29 @@ public class ApplicationDao implements ApplicationService {
 
   @Override
   public void createUser(User user) {
-    // TODO Auto-generated method stub
 
+    try{
+
+      Connection conn = DBConnection.getConnectionToDatabase();
+
+      String sql = "insert into users (Email, FirstName, LastName, Password) values (?, ?, ?, ?)";
+      PreparedStatement stmt = conn.prepareStatement(sql);
+      stmt.setString(1, user.getEmail());
+      stmt.setString(2, user.getFirstName());
+      stmt.setString(3, user.getLastName());
+      stmt.setString(4, user.getPassword());
+
+      stmt.execute();
+
+    }catch (SQLException exception){
+
+      exception.printStackTrace();
+
+    }catch (Exception exception){
+
+      exception.printStackTrace();
+
+    }
   }
 
   @Override
