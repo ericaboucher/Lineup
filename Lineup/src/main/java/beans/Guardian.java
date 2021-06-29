@@ -9,11 +9,19 @@ public class Guardian extends User {
     // Constructors
     public Guardian(String email, String pass) {
         super(email, pass);
-        children = new ArrayList<Integer>();
+        initChildrenList();
+    }
+    public Guardian(String email, String pass, String phoneNum) {
+        super(email, pass, phoneNum);
+        initChildrenList();
     }
     public Guardian(String email, String pass, String fName, String lName){
         super(email, pass, fName, lName);
-        children = new ArrayList<Integer>();
+        initChildrenList();
+    }
+    public Guardian(String email, String pass, String fName, String lName, String phoneNum) {
+        super(email, pass, fName, lName, phoneNum);
+        initChildrenList();
     }
 
     // Modifiers
@@ -27,10 +35,8 @@ public class Guardian extends User {
         children.add(child);
         return true;
     }
-    
-    public Guardian() {
-      super();
-      // TODO Auto-generated constructor stub
-    }
 
+    private void initChildrenList() {
+        children = new ArrayList<Integer>();
+    }
 }
