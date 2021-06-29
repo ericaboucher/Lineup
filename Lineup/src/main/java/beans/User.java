@@ -19,22 +19,29 @@ public abstract class User {
         if(validateEmail(email)) {
             this.email = email;
         } else {
-            //problem
+            //problem, probably fatal
         }
         this.password = pass;
-    }
-    
-    public User(String email, String pass, String fName, String lName) {
-        this(email, pass);
-        firstName = fName;
-        lastName = lName;
     }
     public User(String email, String pass, String phoneNum) {
         this(email, pass);
         if(validatePhoneNumber(phoneNum)) {
             phoneNumber = phoneNum;
         } else {
-            // problem
+            // problem, but not fatal
+        }
+    }
+    public User(String email, String pass, String fName, String lName) {
+        this(email, pass);
+        firstName = fName;
+        lastName = lName;
+    }
+    public User(String email, String pass, String fName, String lName, String phoneNum) {
+        this(email, pass, fName, lName);
+        if(validatePhoneNumber(phoneNum)) {
+            phoneNumber = phoneNum;
+        } else {
+            //problem, but not fatal
         }
     }
     
