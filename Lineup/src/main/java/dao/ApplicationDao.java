@@ -171,7 +171,13 @@ public class ApplicationDao implements ApplicationService {
 
   @Override
   public void createOrUpdateUser(User user) {
-    // TODO Auto-generated method stub
+
+User localUser = readUser(user.getEmail());
+if (localUser == null) {
+  createUser(user);
+} else {
+  updateUser(user);
+}
 
   }
 
