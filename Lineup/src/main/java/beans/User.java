@@ -42,12 +42,27 @@ public abstract class User {
     protected String getEmail() { return email; }
     protected String getFirstNameFirst() { return firstName + " " + lastName; }
     protected String getLastNameFirst() { return lastName + ", " + firstName; }
+    protected String getPhoneNumber() { return phoneNumber; }
+    protected String getPassword() { return password; }
     
     // Modifiers
-    public void editEmail(String newEmail) { email = newEmail; }
-    public void editPassword(String newPassword) { password = newPassword; }
     public void editFirstName(String newName) { firstName = newName; }
     public void editLastName(String newName) { lastName = newName; }
+    public void editPassword(String newPassword) { password = newPassword; }
+    public boolean editEmail(String newEmail) {
+        if (validateEmail(newEmail)) {
+            email = newEmail;
+            return true;
+        }
+        return false;
+    }
+    public boolean editPhoneNumber(String newNumber) {
+        if (validatePhoneNumber(newNumber)) {
+            phoneNumber = newNumber;
+            return true;
+        }
+        return false;
+    }
     
     // Verification
     public boolean verifyEmail(String e) { return e.equals(email); }
