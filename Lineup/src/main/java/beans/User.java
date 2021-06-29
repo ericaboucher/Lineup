@@ -23,6 +23,7 @@ public abstract class User {
         }
         this.password = pass;
     }
+    
     public User(String email, String pass, String fName, String lName) {
         this(email, pass);
         firstName = fName;
