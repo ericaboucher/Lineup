@@ -29,8 +29,8 @@ public class RegistrationServlet extends HttpServlet {
 		String userType = request.getParameter("usertype");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		String firstName = request.getParameter("firstname");
-		String lastName = request.getParameter("lastname");
+		String firstName = request.getParameter("fname");
+		String lastName = request.getParameter("lname");
 		String phoneNumber = request.getParameter("phone");
 
 		if (userType == "Guardian") {
