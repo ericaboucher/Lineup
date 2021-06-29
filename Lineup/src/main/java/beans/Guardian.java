@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Guardian extends User {
     private ArrayList<Integer> children;
-    
+    public static final String userType = "GUARDIAN";
     
     // Constructors
     public Guardian() {
