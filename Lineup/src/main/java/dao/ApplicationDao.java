@@ -145,8 +145,27 @@ public class ApplicationDao implements ApplicationService {
   }
 
   @Override
-  public void deleteUser(String id) {
-    // TODO Auto-generated method stub
+  public void deleteUser(String email) {
+
+    try{
+
+      Connection conn = DBConnection.getConnectionToDatabase();
+
+      String sql = "delete from users where Email=?;";
+      PreparedStatement stmt = conn.prepareStatement(sql);
+      stmt.setString(1, email);
+
+      stmt.execute();
+
+    }catch (SQLException exception){
+
+      exception.printStackTrace();
+
+    }catch (Exception exception){
+
+      exception.printStackTrace();
+
+    }
 
   }
 
