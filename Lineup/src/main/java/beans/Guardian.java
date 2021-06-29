@@ -34,10 +34,4 @@ public class Guardian extends User {
         children.add(child);
         return true;
     }
-    
-    public Guardian() {
-      super();
-      // TODO Auto-generated constructor stub
-    }
-
 }

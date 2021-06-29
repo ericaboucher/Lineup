@@ -10,10 +10,6 @@ public abstract class User {
     private String lastName;
     private String phoneNumber;
     
-    public User() {
-      super();
-    }
-    
     //Constructors
     public User(String email, String pass) {
         if(validateEmail(email)) {
@@ -46,11 +42,13 @@ public abstract class User {
     }
     
     // Accessors
-    protected String getEmail() { return email; }
-    protected String getFirstNameFirst() { return firstName + " " + lastName; }
-    protected String getLastNameFirst() { return lastName + ", " + firstName; }
-    protected String getPhoneNumber() { return phoneNumber; }
-    protected String getPassword() { return password; }
+    public String getEmail() { return email; }
+    public String getFirstNameFirst() { return firstName + " " + lastName; }
+    public String getLastNameFirst() { return lastName + ", " + firstName; }
+    public String getFirstName() { return firstName; }
+    public String getLastName() { return lastName; }
+    public String getPhoneNumber() { return phoneNumber; }
+    public String getPassword() { return password; }
     
     // Modifiers
     public void editFirstName(String newName) { firstName = newName; }
