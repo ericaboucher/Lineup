@@ -18,6 +18,7 @@ import dao.ApplicationDao;
 @WebServlet ("/registrationServlet")
 public class RegistrationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	public User guardian;
 
     public RegistrationServlet() {
         super();
@@ -33,7 +34,7 @@ public class RegistrationServlet extends HttpServlet {
 		String phoneNumber = request.getParameter("phone");
 		
 		if (userType == "Guardian") {
-			User guardian = new Guardian(email, password, userType, firstName, lastName, phoneNumber);
+			guardian = new Guardian (email, password, firstName, lastName, phoneNumber);
 		}else {
 			//create Staff user
 			System.out.println("Error. No way to create staff.");
@@ -41,7 +42,7 @@ public class RegistrationServlet extends HttpServlet {
 		
 		//save user to db
 		ApplicationDao dao = new ApplicationDao();
-		int rows = dao.;//need method to insert data into mysql
+		int rows = dao.createUser(guardian);//need method to insert data into mysql
 				
 		//alert user with message if their registration was completed
 		String infoMessage = null;

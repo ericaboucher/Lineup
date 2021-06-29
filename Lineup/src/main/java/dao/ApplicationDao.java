@@ -50,52 +50,137 @@ public class ApplicationDao implements ApplicationService {
   }
 
   @Override
-  public User readUser(String id) {
+  public User readUser(String email) {
 
-//    User user = null;
-//
-//    try{
-//
-//      // get connection to db
-//      Connection conn = DBConnection.getConnectionToDatabase();
-//
-//      // query to get the user
-//      String sql = "select * from user";
-//
-//    }catch (SQLException exception){
-//
-//      exception.printStackTrace();
-//
-//    }catch (Exception exception){
-//
-//      exception.printStackTrace();
-//
-//    }
-//
-  return null;
+    User user = null;
+
+    try{
+
+      // get connection to db
+      Connection conn = DBConnection.getConnectionToDatabase();
+
+      // query to get the user by email(Primary key)
+      String sql = "select * from user where email=?;";
+      PreparedStatement stmt = conn.prepareStatement(sql);
+      stmt.setString(1, email);
+
+      ResultSet set = stmt.executeQuery();
+
+      while (set.next()){
+
+        user = new Guardian();
+        user.editEmail(set.getString("Email"));
+        user.editFirstName(set.getString("FirstName"));
+        user.editLastName(set.getString("LastName"));
+        user.editPassword(set.getString("Password"));
+
+      }
+
+    }catch (SQLException exception){
+
+      exception.printStackTrace();
+
+    }catch (Exception exception){
+
+      exception.printStackTrace();
+
+    }
+
+    return user;
   }
 
   @Override
   public void createUser(User user) {
-    // TODO Auto-generated method stub
+	  int rowsAffected = 0;
 
+    try{
+
+      Connection conn = DBConnection.getConnectionToDatabase();
+
+      String sql = "insert into users (email, password, userType, firstName, lastName, phoneNum) values (?, ?, ?, ?, ?, ?);";
+      PreparedStatement stmt = conn.prepareStatement(sql);
+      stmt.setString(1, user.getEmail());
+      stmt.setString(2, user.getPassword());
+      stmt.setString(3, user.getUserType());
+      stmt.setString(4, user.getFirstName());
+      stmt.setString(5, user.getLastName());
+      stmt.setString(6, user.getPhoneNumber());
+
+      stmt.execute();
+
+    }catch (SQLException exception){
+
+      exception.printStackTrace();
+
+    }catch (Exception exception){
+
+      exception.printStackTrace();
+
+    }
   }
 
   @Override
   public void updateUser(User user) {
-    // TODO Auto-generated method stub
+
+    try{
+
+      Connection conn = DBConnection.getConnectionToDatabase();
+
+      String sql = "update users set FirstName=?, LastName=?, password=? where Email=?;";
+      PreparedStatement stmt = conn.prepareStatement(sql);
+      stmt.setString(1, user.getFirstName());
+      stmt.setString(2, user.getLastName());
+      stmt.setString(3, user.getPassword());
+      stmt.setString(4, user.getEmail());
+
+      stmt.execute();
+
+    }catch (SQLException exception){
+
+      exception.printStackTrace();
+
+    }catch (Exception exception){
+
+      exception.printStackTrace();
+
+    }
 
   }
 
   @Override
-  public void deleteUser(String id) {
-    // TODO Auto-generated method stub
+  public void deleteUser(String email) {
+
+    try{
+
+      Connection conn = DBConnection.getConnectionToDatabase();
+
+      String sql = "delete from users where Email=?;";
+      PreparedStatement stmt = conn.prepareStatement(sql);
+      stmt.setString(1, email);
+
+      stmt.execute();
+
+    }catch (SQLException exception){
+
+      exception.printStackTrace();
+
+    }catch (Exception exception){
+
+      exception.printStackTrace();
+
+    }
 
   }
 
   @Override
   public void createOrUpdateUser(User user) {
-    // TODO Auto-generated method stub
+
+User localUser = readUser(user.getEmail());
+if (localUser == null) {
+  createUser(user);
+} else {
+  updateUser(user);
+}
 
   }
 

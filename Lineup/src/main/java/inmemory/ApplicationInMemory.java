@@ -37,19 +37,11 @@ public class ApplicationInMemory implements ApplicationService {
 		
 	}
 
-<<<<<<< Upstream, based on branch 'CapstoneProject' of https://github.com/ericaboucher/Lineup.git
   @Override
   public List<User> readUsers() {
     // TODO Auto-generated method stub
     return null;
   }
-=======
-	@Override
-	public List<User> readUsers() {
-		// TODO Auto-generated method stub
-		return null;
-	}
->>>>>>> 50cfa2c Updated servlets
 
 
 }
