@@ -34,9 +34,11 @@ public class ApplicationDao implements ApplicationService {
 
         user = new Guardian();
         user.editEmail(set.getString("email"));
+        user.editPassword(set.getString("password"));
+        user.setUserType(set.getString("userType"));
         user.editFirstName(set.getString("firstName"));
         user.editLastName(set.getString("lastName"));
-        user.editPassword(set.getString("password"));
+        user.editPhoneNumber(set.getString("password"));
 
       }
 
@@ -90,30 +92,35 @@ public class ApplicationDao implements ApplicationService {
   }
 
   @Override
-  public void createUser(User user) {
+  public int createUser(User user) {
+	  int rowsAffected = 0;
 
     try{
 
       Connection conn = DBConnection.getConnectionToDatabase();
 
-      String sql = "insert into users (Email, FirstName, LastName, Password) values (?, ?, ?, ?);";
+      //insert query
+      String sql = "insert into users (email, password, userType, firstName, lastName, phoneNum) values (?, ?, ?, ?, ?, ?);";
+      
       PreparedStatement stmt = conn.prepareStatement(sql);
       stmt.setString(1, user.getEmail());
-      stmt.setString(2, user.getFirstName());
-      stmt.setString(3, user.getLastName());
-      stmt.setString(4, user.getPassword());
+      stmt.setString(2, user.getPassword());
+      stmt.setString(3, user.getUserType());
+      stmt.setString(4, user.getFirstName());
+      stmt.setString(5, user.getLastName());
+      stmt.setString(6, user.getPhoneNumber());
 
-      stmt.execute();
+      rowsAffected = stmt.executeUpdate();
 
     }catch (SQLException exception){
-
       exception.printStackTrace();
-
+      
     }catch (Exception exception){
-
-      exception.printStackTrace();
-
+    	exception.printStackTrace();
     }
+    
+    return rowsAffected;
+
   }
 
   @Override

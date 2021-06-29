@@ -17,21 +17,13 @@ import dao.ApplicationDao;
 @WebServlet ("/registrationServlet")
 public class RegistrationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	public User guardian;
+	public String infoMessage = null;
+	
     public RegistrationServlet() {
         super();
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-//	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		// TODO Auto-generated method stub
-//	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//collect data from form
 		String userType = request.getParameter("usertype");
@@ -42,7 +34,7 @@ public class RegistrationServlet extends HttpServlet {
 		String phoneNumber = request.getParameter("phone");
 
 		if (userType == "Guardian") {
-			User guardian = new Guardian(email, password, userType, firstName, lastName, phoneNumber);
+			guardian = new Guardian(email, password, firstName, lastName, phoneNumber);
 		}else {
 			//create Staff user
 			System.out.println("Error. No way to create staff.");
@@ -50,10 +42,8 @@ public class RegistrationServlet extends HttpServlet {
 
 		//save user to db
 		ApplicationDao dao = new ApplicationDao();
-		int rows = dao.;//need method to insert data into mysql
+		int rows = dao.createUser(guardian);
 
-		//alert user with message if their registration was completed
-		String infoMessage = null;
 		if(rows == 0) {
 			infoMessage = "Sorry, an error occurred.";
 		} else {
