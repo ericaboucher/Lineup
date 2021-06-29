@@ -38,7 +38,7 @@ public class ApplicationDao implements ApplicationService {
         user.setUserType(set.getString("userType"));
         user.editFirstName(set.getString("firstName"));
         user.editLastName(set.getString("lastName"));
-        user.editPhoneNumber(set.getString("password"));
+        user.editPhoneNumber(set.getString("phoneNum"));
 
       }
 
@@ -71,10 +71,12 @@ public class ApplicationDao implements ApplicationService {
       while (set.next()){
 
         user = new Guardian();
-        user.editEmail(set.getString("Email"));
-        user.editFirstName(set.getString("FirstName"));
-        user.editLastName(set.getString("LastName"));
-        user.editPassword(set.getString("Password"));
+        user.editEmail(set.getString("email"));
+        user.editPassword(set.getString("password"));
+        user.setUserType(set.getString("userType"));
+        user.editFirstName(set.getString("firstName"));
+        user.editLastName(set.getString("lastName"));
+        user.editPhoneNumber(set.getString("phoneNum"));
 
       }
 
@@ -130,12 +132,15 @@ public class ApplicationDao implements ApplicationService {
 
       Connection conn = DBConnection.getConnectionToDatabase();
 
-      String sql = "update users set FirstName=?, LastName=?, password=? where Email=?;";
+      String sql = "update users set password=?, userType=?, firstName=?, lastName=?, phoneNum=? where email=?;";
       PreparedStatement stmt = conn.prepareStatement(sql);
-      stmt.setString(1, user.getFirstName());
-      stmt.setString(2, user.getLastName());
-      stmt.setString(3, user.getPassword());
-      stmt.setString(4, user.getEmail());
+      
+      stmt.setString(1, user.getPassword());
+      stmt.setString(2, user.getUserType());
+      stmt.setString(3, user.getFirstName());
+      stmt.setString(4, user.getLastName());
+      stmt.setString(5, user.getPhoneNumber());
+      stmt.setString(6, user.getEmail());
 
       stmt.execute();
 
