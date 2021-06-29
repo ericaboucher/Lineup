@@ -1,7 +1,5 @@
 package beans;
 
-import java.util.regex.Pattern;
-
 public abstract class User {
 
     private String email;
