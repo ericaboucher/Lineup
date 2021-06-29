@@ -33,10 +33,10 @@ public class ApplicationDao implements ApplicationService {
       while (set.next()){
 
         user = new Guardian();
-        user.editEmail(set.getString("Email"));
-        user.editFirstName(set.getString("FirstName"));
-        user.editLastName(set.getString("LastName"));
-        user.editPassword(set.getString("Password"));
+        user.editEmail(set.getString("email"));
+        user.editFirstName(set.getString("firstName"));
+        user.editLastName(set.getString("lastName"));
+        user.editPassword(set.getString("password"));
 
       }
 
@@ -50,43 +50,29 @@ public class ApplicationDao implements ApplicationService {
   }
 
   @Override
-  public User readUser(String email) {
+  public User readUser(String id) {
 
-    User user = null;
-
-    try{
-
-      // get connection to db
-      Connection conn = DBConnection.getConnectionToDatabase();
-
-      // query to get the user by email(Primary key)
-      String sql = "select * from user where email=?";
-      PreparedStatement stmt = conn.prepareStatement(sql);
-      stmt.setString(1, email);
-
-      ResultSet set = stmt.executeQuery();
-
-      while (set.next()){
-
-        user = new Guardian();
-        user.editEmail(set.getString("Email"));
-        user.editFirstName(set.getString("FirstName"));
-        user.editLastName(set.getString("LastName"));
-        user.editPassword(set.getString("Password"));
-
-      }
-
-    }catch (SQLException exception){
-
-      exception.printStackTrace();
-
-    }catch (Exception exception){
-
-      exception.printStackTrace();
-
-    }
-
-    return user;
+//    User user = null;
+//
+//    try{
+//
+//      // get connection to db
+//      Connection conn = DBConnection.getConnectionToDatabase();
+//
+//      // query to get the user
+//      String sql = "select * from user";
+//
+//    }catch (SQLException exception){
+//
+//      exception.printStackTrace();
+//
+//    }catch (Exception exception){
+//
+//      exception.printStackTrace();
+//
+//    }
+//
+  return null;
   }
 
   @Override
