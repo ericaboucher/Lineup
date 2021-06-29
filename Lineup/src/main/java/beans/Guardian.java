@@ -18,6 +18,10 @@ public class Guardian extends User {
         super(email, pass, fName, lName);
         children = new ArrayList<Integer>();
     }
+    public Guardian(String email, String pass, String fName, String lName, String phoneNum) {
+        super(email, pass, fName, lName, phoneNum);
+        children = new ArrayList<Integer>();
+    }
 
     // Modifiers
     public boolean signChildIn(Integer child) {
