@@ -12,9 +12,9 @@ public interface ApplicationService {
 	
 	public int createUser(User user);
 	
-	public void updateUser(User user);
+	public int updateUser(User user);
 	
-	public void deleteUser(String id);
+	public int deleteUser(String id);
 	
 	public void createOrUpdateUser(User user);
 	

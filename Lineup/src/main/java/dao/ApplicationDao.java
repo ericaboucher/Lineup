@@ -126,13 +126,14 @@ public class ApplicationDao implements ApplicationService {
   }
 
   @Override
-  public void updateUser(User user) {
-
+  public int updateUser(User user) {
+	  int rowsAffected = 0;
+	  
     try{
 
       Connection conn = DBConnection.getConnectionToDatabase();
 
-      String sql = "update user set password=?, userType=?, firstName=?, lastName=?, phoneNum=? where email=?;";
+      String sql = "update user set password=?, firstName=?, lastName=?, phoneNum=? where email=?;";
       PreparedStatement stmt = conn.prepareStatement(sql);
       
       stmt.setString(1, user.getPassword());
@@ -142,7 +143,7 @@ public class ApplicationDao implements ApplicationService {
       stmt.setString(5, user.getPhoneNum());
       stmt.setString(6, user.getEmail());
 
-      stmt.execute();
+      rowsAffected = stmt.executeUpdate();
 
     }catch (SQLException exception){
 
@@ -153,12 +154,13 @@ public class ApplicationDao implements ApplicationService {
       exception.printStackTrace();
 
     }
+    return rowsAffected;
 
   }
 
   @Override
-  public void deleteUser(String email) {
-
+  public int deleteUser(String email) {
+	  int rowsAffected = 0;
     try{
 
       Connection conn = DBConnection.getConnectionToDatabase();
@@ -167,7 +169,7 @@ public class ApplicationDao implements ApplicationService {
       PreparedStatement stmt = conn.prepareStatement(sql);
       stmt.setString(1, email);
 
-      stmt.execute();
+      rowsAffected = stmt.executeUpdate();
 
     }catch (SQLException exception){
 
@@ -178,12 +180,12 @@ public class ApplicationDao implements ApplicationService {
       exception.printStackTrace();
 
     }
+    return rowsAffected;
 
   }
 
   	@Override
   	public void createOrUpdateUser(User user) {
-  		
   		User localUser = readUser(user.getEmail());
   		if (localUser == null) {
   			createUser(user);
