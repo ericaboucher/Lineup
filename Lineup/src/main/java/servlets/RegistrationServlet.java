@@ -35,11 +35,12 @@ public class RegistrationServlet extends HttpServlet {
 
 		if (userType == "Guardian") {
 			user = new Guardian(email, password, userType, firstName, lastName, phoneNum);
-		//}else {
+		}else {
 			//create Staff user
-			//System.out.println("Error. No way to create staff.");
-		//}
-
+			System.out.println("Error. No way to create staff.");
+		}
+		
+		
 		//save user to db
 		ApplicationDao dao = new ApplicationDao();
 		int rows = dao.createUser(user);
