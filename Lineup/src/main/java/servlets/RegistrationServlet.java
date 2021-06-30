@@ -47,7 +47,7 @@ public class RegistrationServlet extends HttpServlet {
 		if(rows == 0) {
 			infoMessage = "Sorry, an error occurred.";
 		} else {
-			infoMessage = "User created successfully!";
+			infoMessage = "User created successfully! Verification email sent to " + user.getEmail();
 		}
 
 		//write the message back to user

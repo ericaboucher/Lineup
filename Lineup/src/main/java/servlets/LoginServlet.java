@@ -1,6 +1,8 @@
 package servlets;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +14,7 @@ import dao.ApplicationDao;
 
 @WebServlet("/loginServlet")
 public class LoginServlet extends HttpServlet {
-	private static final long serialVersionUID = 1787L;
+	private static final long serialVersionUID = 17871L;
 
     public LoginServlet() {
         super();
@@ -25,7 +27,7 @@ public class LoginServlet extends HttpServlet {
 
 		//call dao to validate user
 		ApplicationDao dao = new ApplicationDao();
-		boolean isValidUser = dao.validateUser(email, password); //need method
+		boolean isValidUser = dao.validateUser(email, password); 
 
 		//check to see if user is valid
 		if(isValidUser) {
@@ -34,8 +36,7 @@ public class LoginServlet extends HttpServlet {
 
 			//set username as attribute
 			session.setAttribute("email", email);
-			//forward to index page?? home page??
-			//request.getRequestDispatcher("/index.html").forward(request, response);		
+			request.getRequestDispatcher("/home.html").forward(request, response);		
 		} else {
 			String errorMessage = "Sorry, email or password is not valid. Please try again.";
 					request.setAttribute("error", errorMessage);
@@ -45,10 +46,10 @@ public class LoginServlet extends HttpServlet {
 	}
 
 
-	/*
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/index.html");
+		dispatcher.include(request, response);
 	}
-	*/
 }
 
