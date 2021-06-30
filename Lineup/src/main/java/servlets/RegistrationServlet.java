@@ -33,7 +33,7 @@ public class RegistrationServlet extends HttpServlet {
 		String lastName = request.getParameter("lastName");
 		String phoneNum = request.getParameter("phoneNum");
 
-		//if (userType == "Guardian") {
+		if (userType == "Guardian") {
 			user = new Guardian(email, password, userType, firstName, lastName, phoneNum);
 		//}else {
 			//create Staff user
