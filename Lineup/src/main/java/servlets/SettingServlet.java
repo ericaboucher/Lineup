@@ -24,13 +24,12 @@ public class SettingServlet extends HttpServlet {
 
     public SettingServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
-/*
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/setting.html");
 		dispatcher.include(request, response);
-	}*/
+	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//collect data from form
