@@ -24,7 +24,7 @@ public class ApplicationDao implements ApplicationService {
       Connection conn = DBConnection.getConnectionToDatabase();
 
       // sql query to get all users
-      String sql = "select * from users;";
+      String sql = "select * from user;";
       PreparedStatement stmt = conn.prepareStatement(sql);
 
       // execute query , get resultset and return users
@@ -102,7 +102,7 @@ public class ApplicationDao implements ApplicationService {
       Connection conn = DBConnection.getConnectionToDatabase();
 
       //insert query
-      String sql = "insert into users (email, password, userType, firstName, lastName, phoneNum) values (?, ?, ?, ?, ?, ?);";
+      String sql = "insert into user (email, password, userType, firstName, lastName, phoneNum) values (?, ?, ?, ?, ?, ?);";
       
       PreparedStatement stmt = conn.prepareStatement(sql);
       stmt.setString(1, user.getEmail());
@@ -110,7 +110,7 @@ public class ApplicationDao implements ApplicationService {
       stmt.setString(3, user.getUserType());
       stmt.setString(4, user.getFirstName());
       stmt.setString(5, user.getLastName());
-      stmt.setString(6, user.getPhoneNumber());
+      stmt.setString(6, user.getPhoneNum());
 
       rowsAffected = stmt.executeUpdate();
 
@@ -132,14 +132,14 @@ public class ApplicationDao implements ApplicationService {
 
       Connection conn = DBConnection.getConnectionToDatabase();
 
-      String sql = "update users set password=?, userType=?, firstName=?, lastName=?, phoneNum=? where email=?;";
+      String sql = "update user set password=?, userType=?, firstName=?, lastName=?, phoneNum=? where email=?;";
       PreparedStatement stmt = conn.prepareStatement(sql);
       
       stmt.setString(1, user.getPassword());
       stmt.setString(2, user.getUserType());
       stmt.setString(3, user.getFirstName());
       stmt.setString(4, user.getLastName());
-      stmt.setString(5, user.getPhoneNumber());
+      stmt.setString(5, user.getPhoneNum());
       stmt.setString(6, user.getEmail());
 
       stmt.execute();
@@ -163,7 +163,7 @@ public class ApplicationDao implements ApplicationService {
 
       Connection conn = DBConnection.getConnectionToDatabase();
 
-      String sql = "delete from users where Email=?;";
+      String sql = "delete from user where email=?;";
       PreparedStatement stmt = conn.prepareStatement(sql);
       stmt.setString(1, email);
 
@@ -181,16 +181,39 @@ public class ApplicationDao implements ApplicationService {
 
   }
 
-  @Override
-  public void createOrUpdateUser(User user) {
-
-User localUser = readUser(user.getEmail());
-if (localUser == null) {
-  createUser(user);
-} else {
-  updateUser(user);
-}
-
-  }
-
+  	@Override
+  	public void createOrUpdateUser(User user) {
+  		
+  		User localUser = readUser(user.getEmail());
+  		if (localUser == null) {
+  			createUser(user);
+  		} else {
+  			updateUser(user);
+  		}
+  	}
+  	
+  	public boolean validateUser(String email, String password) {
+  		boolean isValidUser = false;
+  		try {
+  			//get db connection
+  			Connection conn = DBConnection.getConnectionToDatabase();
+  			
+  			//select query
+  			String sql = "select * from user where email=? and password=?";
+  			
+  			//set parameters with PreparedStatement
+  			PreparedStatement stmt = conn.prepareStatement(sql);
+  			stmt.setString(1, email);
+  			stmt.setString(2, password);
+  			
+  			ResultSet set = stmt.executeQuery();
+  			while(set.next()) {
+  				isValidUser = true;
+  			}
+  		}	
+  		catch(SQLException e) {
+  				e.printStackTrace();
+  			}
+  			return isValidUser;
+  	}
 }
