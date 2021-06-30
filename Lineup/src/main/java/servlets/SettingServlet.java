@@ -38,18 +38,11 @@ public class SettingServlet extends HttpServlet {
 			String newEmail = request.getParameter("email");
 			String phoneNum = request.getParameter("phoneNum");
 			String password = request.getParameter("password");
+			String oldEmail = user.getEmail();
 			
 			ApplicationDao dao = new ApplicationDao();
-			HttpSession session = request.getSession();
-			String oldEmail = (String) session.getAttribute("email");
 			
-			user = dao.readUser(oldEmail);
-			user.editEmail(newEmail);
-			user.editPassword(password);
-			user.editFirstName(firstName);
-			user.editLastName(lastName);
-			user.editPhoneNumber(phoneNum);
-			int rows = dao.updateUser(user);
+			int rows = dao.updateUser(firstName, lastName, newEmail, phoneNum, password, oldEmail);
 				if(rows == 0) {
 					infoMessage = "Sorry, an error occurred.";
 				} else {

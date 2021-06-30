@@ -125,23 +125,23 @@ public class ApplicationDao implements ApplicationService {
 
   }
 
-  @Override
-  public int updateUser(User user) {
+@Override
+  public int updateUser(String firstName, String lastName, String newEmail, String phoneNum, String password, String oldEmail) {
 	  int rowsAffected = 0;
 	  
     try{
 
       Connection conn = DBConnection.getConnectionToDatabase();
 
-      String sql = "update user set password=?, firstName=?, lastName=?, phoneNum=? where email=?;";
+      String sql = "update user set firstName=?, lastName=?, email=?, phoneNum=?, password=? where email=?;";
       PreparedStatement stmt = conn.prepareStatement(sql);
       
-      stmt.setString(1, user.getPassword());
-      stmt.setString(2, user.getUserType());
-      stmt.setString(3, user.getFirstName());
-      stmt.setString(4, user.getLastName());
-      stmt.setString(5, user.getPhoneNum());
-      stmt.setString(6, user.getEmail());
+      stmt.setString(1, firstName);
+      stmt.setString(2, lastName);
+      stmt.setString(3, newEmail);
+      stmt.setString(4, phoneNum);
+      stmt.setString(5, password);
+      stmt.setString(6, oldEmail);
 
       rowsAffected = stmt.executeUpdate();
 
@@ -183,7 +183,7 @@ public class ApplicationDao implements ApplicationService {
     return rowsAffected;
 
   }
-
+/*
   	@Override
   	public void createOrUpdateUser(User user) {
   		User localUser = readUser(user.getEmail());
@@ -192,7 +192,7 @@ public class ApplicationDao implements ApplicationService {
   		} else {
   			updateUser(user);
   		}
-  	}
+  	}*/
   	
   	public boolean validateUser(String email, String password) {
   		boolean isValidUser = false;
@@ -218,4 +218,10 @@ public class ApplicationDao implements ApplicationService {
   			}
   			return isValidUser;
   	}
+
+	@Override
+	public int updateUser(String firstName, String lastName, String email, String phoneNum, String password) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
