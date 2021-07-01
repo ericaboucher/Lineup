@@ -13,7 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import beans.User;
+<<<<<<< Upstream, based on branch 'CapstoneProject' of https://github.com/ericaboucher/Lineup.git
 import dao.UserDao;
+=======
+import dao.ApplicationDao;
+>>>>>>> dbb2993 testing
 
 @WebServlet(name = "loginServlet", urlPatterns = {"/loginServlet"})
 public class LoginServlet extends HttpServlet {
@@ -35,6 +39,7 @@ public class LoginServlet extends HttpServlet {
         UserDao dao = new UserDao();
         boolean isValidUser = dao.validateUser(email, password); 
 
+<<<<<<< Upstream, based on branch 'CapstoneProject' of https://github.com/ericaboucher/Lineup.git
         //check to see if user is valid
         if(isValidUser) {
             //set up HTTP session
@@ -53,10 +58,39 @@ public class LoginServlet extends HttpServlet {
             request.getRequestDispatcher("/index.html").forward(request, response);
         }
     }
+=======
+		//check to see if user is valid
+		if(isValidUser) {
+			//set up HTTP session
+			//HttpSession session = request.getSession();
+		    ServletContext context = request.getServletContext();
+>>>>>>> dbb2993 testing
 
+<<<<<<< Upstream, based on branch 'CapstoneProject' of https://github.com/ericaboucher/Lineup.git
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/index.html");
         dispatcher.include(request, response);
     }
+=======
+			//set username as attribute
+//			session.setAttribute("email", email);
+		    User currentUser = dao.readUser(email);
+		    context.setAttribute("user", currentUser);
+			request.getRequestDispatcher("/home.html").forward(request, response);		
+		} else {
+			String errorMessage = "Sorry, email or password is not valid. Please try again.";
+					request.setAttribute("error", errorMessage);
+					request.getRequestDispatcher("/index.html").forward(request, response);
+		}
+
+	}
+
+
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/index.html");
+		dispatcher.include(request, response);
+	}
+>>>>>>> dbb2993 testing
 }
 
