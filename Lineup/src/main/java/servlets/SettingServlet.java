@@ -19,7 +19,7 @@ import dao.ApplicationDao;
 @WebServlet("/settingServlet")
 public class SettingServlet extends HttpServlet {
 	private static final long serialVersionUID = 154545L;
-	public User user;
+	//public User user;
 	public String infoMessage = null;
 
     public SettingServlet() {
@@ -32,6 +32,9 @@ public class SettingServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	    // Get User from the Context
+	    User currentUser = (User)request.getServletContext().getAttribute("user");
+	    
 		//collect data from form
 		String firstName = request.getParameter("firstName");
 		String lastName = request.getParameter("lastName");
@@ -40,16 +43,16 @@ public class SettingServlet extends HttpServlet {
 			String password = request.getParameter("password");
 			
 			ApplicationDao dao = new ApplicationDao();
-			HttpSession session = request.getSession();
-			String oldEmail = (String) session.getAttribute("email");
+			//HttpSession session = request.getSession();
+			//String oldEmail = (String) session.getAttribute("email");
 			
-			user = dao.readUser(oldEmail);
-			user.editEmail(newEmail);
-			user.editPassword(password);
-			user.editFirstName(firstName);
-			user.editLastName(lastName);
-			user.editPhoneNumber(phoneNum);
-			int rows = dao.updateUser(user);
+			//user = dao.readUser(oldEmail);
+			currentUser.editEmail(newEmail);
+			currentUser.editPassword(password);
+			currentUser.editFirstName(firstName);
+			currentUser.editLastName(lastName);
+			currentUser.editPhoneNumber(phoneNum);
+			int rows = dao.updateUser(currentUser);
 				if(rows == 0) {
 					infoMessage = "Sorry, an error occurred.";
 				} else {

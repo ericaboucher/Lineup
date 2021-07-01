@@ -19,7 +19,7 @@ import dao.ApplicationDao;
 @WebServlet("/deleteServlet")
 public class DeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 15642L;
-	public User user;
+	//public User user;
 	public String infoMessage = null;
        
 
@@ -36,10 +36,12 @@ public class DeleteServlet extends HttpServlet {
 
 		
 		ApplicationDao dao = new ApplicationDao();
-		HttpSession session = request.getSession();
-		String email = (String) session.getAttribute("email");
-		user = dao.readUser(email);
-				int rows = dao.deleteUser(email);
+		//HttpSession session = request.getSession();
+		//String email = (String) session.getAttribute("email");
+		//ervletContext context = request.getServletContext();
+		User currentUser = (User) request.getServletContext().getAttribute("user");
+		//user = dao.readUser(currentUseremail);
+		int rows = dao.deleteUser(currentUser.getEmail());
 			if(rows == 0) {
 				infoMessage = "Sorry, an error occurred.";
 			} else {
