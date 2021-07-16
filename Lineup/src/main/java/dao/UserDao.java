@@ -11,7 +11,7 @@ import beans.Guardian;
 import beans.User;
 import services.ApplicationService;
 
-public class ApplicationDao implements ApplicationService {
+public class UserDao implements ApplicationService {
 
   @Override
   public List<User> readUsers() {
