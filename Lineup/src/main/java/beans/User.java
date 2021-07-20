@@ -47,6 +47,9 @@ public abstract class User {
             //problem, but not fatal
         }
     }
+    public User(User toCopy) {
+        this(toCopy.getEmail(), toCopy.getPassword(), toCopy.getUserType(), toCopy.getFirstName(), toCopy.getLastName(), toCopy.getPhoneNum());
+    }
     
     // Accessors
     public String getEmail() { return email; }
