@@ -4,24 +4,33 @@ public class Student{
     private final UUID studentID;
     private final String firstName;
     private final String lastName;
-    private final Guardian guardian;
+    private final String guardianEmail;
     private boolean signedIn;
     
     // Used when creating a new student from scratch
-    public Student(String firstName, String lastName, Guardian guardian) {
-        studentId = new UUID();
+    public Student(String firstName, String lastName, String guardianEmail) {
+        studentId = UUID.randomUUID();
         this.firstName = firstName;
         this.lastName = lastName;
-        this.guardian = new Guardian(guardian);
+        this.guardianEmail = guardianEmail;
         signedIn = false;
     }
     
-    //Used when creating a Student object from the database
-    public Student(UUID studentId, String firstName, String lastName, Guardian guardian, boolean signedIn) {
-        this(firstName, lastName, guardian);
-        this.studentId = studentId;
+    // Used when creating a Student object from the database
+    public Student(String studentId, String firstName, String lastName, String guardianEmail, boolean signedIn) {
+        this(firstName, lastName, guardianEmail);
+        this.studentId = UUID.fromString(studentId);
         this.signedIn = signedId;
     }
+    
+    // Accessors
+    public String getId() { return studentID.toString(); }
+    public String getFirstName() { return firstName; }
+    public String getLastName() { return lastName; }
+    public String getGuardianEmail() { return guardianEmail; }
+    public boolean isSignedIn() { return signedIn; }
+    
+    // Public sign-in/sign-out methods
     public boolean signIn() {
         if(signedIn == true) {
             return false;
