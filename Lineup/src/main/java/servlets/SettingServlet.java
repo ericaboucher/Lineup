@@ -17,7 +17,6 @@ import dao.UserDao;
 @WebServlet("/settingServlet")
 public class SettingServlet extends HttpServlet {
     private static final long serialVersionUID = 154545L;
-    //public User user;
     public String infoMessage = null;
 
     public SettingServlet() {
