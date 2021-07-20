@@ -1,2 +1,6 @@
 package beans;
-public class Student{}
+
+public class Student{
+    private final UUID studentID;
+    
+}
