@@ -12,14 +12,12 @@ public interface ApplicationService {
 	
 	public int createUser(User user);
 	
+	public int updateUser(User user);
+	
 	public int deleteUser(String id);
 	
-	/*
-	public void createOrUpdateUser(User user);*/
+	public void createOrUpdateUser(User user);
 
-	int updateUser(String firstName, String lastName, String email, String phoneNum, String password);
-
-	int updateUser(String firstName, String lastName, String newEmail, String phoneNum, String password,
-			String oldEmail);
+	int deleteUser(User currentUser);
 	
 }

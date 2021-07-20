@@ -1,73 +1,84 @@
-package servlets;
+  package servlets;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.MessageFormat;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+//import javax.servlet.http.HttpSession;
 
 import beans.User;
 import dao.ApplicationDao;
 
-@WebServlet("/settingServlet")
+@WebServlet(name="settingServlet", urlPatterns={"/settingServlet"})
 public class SettingServlet extends HttpServlet {
-	private static final long serialVersionUID = 154545L;
-	public User user;
-	public String infoMessage = null;
+    private static final long serialVersionUID = 154545L;
+    //public User user;
+    public String infoMessage = null;
 
     public SettingServlet() {
         super();
+        System.out.println("Setting Servlet Created!");
     }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/setting.html");
-		dispatcher.include(request, response);
-	}
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("Reached the GET Setting Servlet");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/setting.html");
+        dispatcher.include(request, response);
+    }
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//collect data from form
-		String firstName = request.getParameter("firstName");
-		String lastName = request.getParameter("lastName");
-			String newEmail = request.getParameter("email");
-			String phoneNum = request.getParameter("phoneNum");
-			String password = request.getParameter("password");
-			String oldEmail = user.getEmail();
-			
-			ApplicationDao dao = new ApplicationDao();
-			
-			int rows = dao.updateUser(firstName, lastName, newEmail, phoneNum, password, oldEmail);
-				if(rows == 0) {
-					infoMessage = "Sorry, an error occurred.";
-				} else {
-					infoMessage = "User account updated successfully!" ;
-				}
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("Reached the POST Setting Servlet!");
+        // Get User from the Context
+        User currentUser = (User)request.getServletContext().getAttribute("user");
 
-				//write the message back to user
-				String page = getHTMLString(request.getServletContext().getRealPath("/setting.html"), infoMessage);
-				response.getWriter().write(page);
-				}
+        //collect data from form
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        //String newEmail = request.getParameter("email");
+        String phoneNum = request.getParameter("phoneNum");
+        String password = request.getParameter("password");
 
-				public String getHTMLString(String filePath, String message) throws IOException{
-					BufferedReader reader = new BufferedReader(new FileReader(filePath));
-					String line="";
-					StringBuffer buffer = new StringBuffer();
-					while((line=reader.readLine())!=null){
-						buffer.append(line);
-					}
+        ApplicationDao dao = new ApplicationDao();
+        //HttpSession session = request.getSession();
+        //String oldEmail = (String) session.getAttribute("email");
 
-					reader.close();
-					String page = buffer.toString();
+        //user = dao.readUser(oldEmail);
+        //currentUser.editEmail(newEmail);
+        currentUser.editPassword(password);
+        currentUser.editFirstName(firstName);
+        currentUser.editLastName(lastName);
+        currentUser.editPhoneNumber(phoneNum);
+        
+        int rows = dao.updateUser(currentUser);
+        if(rows == 0) {
+            infoMessage = "Sorry, an error occurred.";
+        } else {
+            infoMessage = "User account updated successfully!" ;
+        }
+        System.out.println(infoMessage);
+        //write the message back to user
+        String page = getHTMLString(request.getServletContext().getRealPath("/setting.html"), infoMessage);
+        response.getWriter().write(page);
+    }
 
-					page = MessageFormat.format(page, message);
+    public String getHTMLString(String filePath, String message) throws IOException{
+        BufferedReader reader = new BufferedReader(new FileReader(filePath));
+        String line="";
+        StringBuffer buffer = new StringBuffer();
+        while((line=reader.readLine())!=null) {
+            buffer.append(line);
+        }
 
-					return page;		
-				}
+        reader.close();
+        String page = buffer.toString();
 
-	}
+        page = MessageFormat.format(page, message);
+        return page;		
+    }
+}

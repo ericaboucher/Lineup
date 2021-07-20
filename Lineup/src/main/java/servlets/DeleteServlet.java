@@ -1,70 +1,81 @@
 package servlets;
 
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.MessageFormat;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+//import javax.servlet.http.HttpSession;
 
 import beans.User;
 import dao.ApplicationDao;
 
-@WebServlet("/deleteServlet")
+@WebServlet(name = "deleteServlet", urlPatterns = {"/deleteServlet"})
 public class DeleteServlet extends HttpServlet {
-	private static final long serialVersionUID = 15642L;
-	public User user;
-	public String infoMessage = null;
-       
+    private static final long serialVersionUID = 15642L;
+    //public User user;
+    public String infoMessage = null;
 
     public DeleteServlet() {
         super();
     }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/setting.html");
-		dispatcher.include(request, response);
-	}
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/setting.html");
+        dispatcher.include(request, response);
+        ApplicationDao dao = new ApplicationDao();
+        User currentUser = (User) request.getServletContext().getAttribute("email");
+        
+        int rows = dao.deleteUser(currentUser);
+        if(rows == 0) {
+            infoMessage = "Sorry, an error occurred.";
+        } else {
+            infoMessage = "User account deleted successfully!" ;
+        }
+        System.out.println(infoMessage);
+        //write the message back to user
+        String page = getHTMLString(request.getServletContext().getRealPath("/setting.html"), infoMessage);
+        response.getWriter().write(page);
+    }
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        ApplicationDao dao = new ApplicationDao();
+//        //HttpSession session = request.getSession();
+//        //String email = (String) session.getAttribute("email");
+//        //ervletContext context = request.getServletContext();
+//        User currentUser = (User) request.getServletContext().getAttribute("user");
+//        //user = dao.readUser(currentUseremail);
+//        
+//        int rows = dao.deleteUser(currentUser.getEmail());
+//        if(rows == 0) {
+//            infoMessage = "Sorry, an error occurred.";
+//        } else {
+//            infoMessage = "User account deleted successfully!" ;
+//        }
+//        //write the message back to user
+//        String page = getHTMLString(request.getServletContext().getRealPath("/setting.html"), infoMessage);
+//        response.getWriter().write(page);
+    }
 
-		
-		ApplicationDao dao = new ApplicationDao();
-		HttpSession session = request.getSession();
-		String email = (String) session.getAttribute("email");
-		user = dao.readUser(email);
-				int rows = dao.deleteUser(email);
-			if(rows == 0) {
-				infoMessage = "Sorry, an error occurred.";
-			} else {
-				infoMessage = "User account deleted successfully!" ;
-			}
+    public String getHTMLString(String filePath, String message) throws IOException{
+        BufferedReader reader = new BufferedReader(new FileReader(filePath));
+        String line="";
+        StringBuffer buffer = new StringBuffer();
+        while((line=reader.readLine())!=null){
+            buffer.append(line);
+        }
 
-			//write the message back to user
-			String page = getHTMLString(request.getServletContext().getRealPath("/setting.html"), infoMessage);
-			response.getWriter().write(page);
-			}
-
-			public String getHTMLString(String filePath, String message) throws IOException{
-				BufferedReader reader = new BufferedReader(new FileReader(filePath));
-				String line="";
-				StringBuffer buffer = new StringBuffer();
-				while((line=reader.readLine())!=null){
-					buffer.append(line);
-				}
-
-				reader.close();
-				String page = buffer.toString();
-
-				page = MessageFormat.format(page, message);
-
-				return page;		
-			}
-	}
+        reader.close();
+        
+        String page = buffer.toString();
+        page = MessageFormat.format(page, message);
+        return page;		
+    }
+}
 
