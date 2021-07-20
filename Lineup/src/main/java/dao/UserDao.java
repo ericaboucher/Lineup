@@ -125,74 +125,53 @@ public class UserDao implements ApplicationService {
 
   }
 
-@Override
-  public int updateUser(String firstName, String lastName, String newEmail, String phoneNum, String password, String oldEmail) {
-	  int rowsAffected = 0;
-	  
-    try{
+  @Override
+	public int updateUser(String firstName, String lastName, String newEmail, String phoneNum, String password,
+			String oldEmail) {
+		int rowsAffected = 0;
 
-      Connection conn = DBConnection.getConnectionToDatabase();
+      try{
+          Connection conn = DBConnection.getConnectionToDatabase();
 
-      String sql = "update user set firstName=?, lastName=?, email=?, phoneNum=?, password=? where email=?;";
-      PreparedStatement stmt = conn.prepareStatement(sql);
-      
-      stmt.setString(1, firstName);
-      stmt.setString(2, lastName);
-      stmt.setString(3, newEmail);
-      stmt.setString(4, phoneNum);
-      stmt.setString(5, password);
-      stmt.setString(6, oldEmail);
+          String sql = "update user set password=?, firstName=?, lastName=?, phoneNum=?, email=? where email=?;";
+          PreparedStatement stmt = conn.prepareStatement(sql);
 
-      rowsAffected = stmt.executeUpdate();
+          stmt.setString(1, password);
+          //stmt.setString(2, user.getUserType());
+          stmt.setString(2, firstName);
+          stmt.setString(3, lastName);
+          stmt.setString(4, phoneNum);
+          stmt.setString(5, newEmail);
+          stmt.setString(6, oldEmail);
 
-    }catch (SQLException exception){
-
-      exception.printStackTrace();
-
-    }catch (Exception exception){
-
-      exception.printStackTrace();
-
-    }
-    return rowsAffected;
-
+          rowsAffected = stmt.executeUpdate();
+      }catch (SQLException exception){
+          exception.printStackTrace();
+      }catch (Exception exception){
+          exception.printStackTrace();
+      }
+      System.out.println("Rows affected: " + rowsAffected);
+      return rowsAffected;
   }
-
   @Override
   public int deleteUser(String email) {
-	  int rowsAffected = 0;
-    try{
+      int rowsAffected = 0;
+      Connection conn = null;
+      try{
+          conn = DBConnection.getConnectionToDatabase();
 
-      Connection conn = DBConnection.getConnectionToDatabase();
+          String sql = "delete from user where email=?";
+          PreparedStatement stmt = conn.prepareStatement(sql);
+          stmt.setString(1, email);
 
-      String sql = "delete from user where email=?;";
-      PreparedStatement stmt = conn.prepareStatement(sql);
-      stmt.setString(1, email);
-
-      rowsAffected = stmt.executeUpdate();
-
-    }catch (SQLException exception){
-
-      exception.printStackTrace();
-
-    }catch (Exception exception){
-
-      exception.printStackTrace();
-
-    }
-    return rowsAffected;
-
+          rowsAffected = stmt.executeUpdate();
+      }catch (SQLException exception){
+          exception.printStackTrace();
+      }catch (Exception exception){
+          exception.printStackTrace();
+      } 
+      return rowsAffected;
   }
-/*
-  	@Override
-  	public void createOrUpdateUser(User user) {
-  		User localUser = readUser(user.getEmail());
-  		if (localUser == null) {
-  			createUser(user);
-  		} else {
-  			updateUser(user);
-  		}
-  	}*/
   	
   	public boolean validateUser(String email, String password) {
   		boolean isValidUser = false;
@@ -219,9 +198,4 @@ public class UserDao implements ApplicationService {
   			return isValidUser;
   	}
 
-	@Override
-	public int updateUser(String firstName, String lastName, String email, String phoneNum, String password) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 }

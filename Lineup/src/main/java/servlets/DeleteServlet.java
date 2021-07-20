@@ -5,18 +5,15 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.MessageFormat;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-//import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSession;
+import dao.UserDao;
 
-import beans.User;
-import dao.ApplicationDao;
-
-@WebServlet(name = "deleteServlet", urlPatterns = {"/deleteServlet"})
+@WebServlet("/deleteServlet")
 public class DeleteServlet extends HttpServlet {
     private static final long serialVersionUID = 15642L;
     //public User user;
@@ -27,14 +24,13 @@ public class DeleteServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/setting.html");
-        dispatcher.include(request, response);
-        ApplicationDao dao = new ApplicationDao();
-        User currentUser = (User) request.getServletContext().getAttribute("email");
+        UserDao userDao = new UserDao();
+        HttpSession session = request.getSession();
+        String email = (String) session.getAttribute("email");
         
-        int rows = dao.deleteUser(currentUser);
+        int rows = userDao.deleteUser(email);
         if(rows == 0) {
-            infoMessage = "Sorry, an error occurred.";
+            infoMessage = "Sorry, a delete error occurred. User: " + email;
         } else {
             infoMessage = "User account deleted successfully!" ;
         }

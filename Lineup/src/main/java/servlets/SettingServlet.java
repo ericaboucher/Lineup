@@ -10,12 +10,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-//import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSession;
 
-import beans.User;
-import dao.ApplicationDao;
+import dao.UserDao;
 
-@WebServlet(name="settingServlet", urlPatterns={"/settingServlet"})
+@WebServlet("/settingServlet")
 public class SettingServlet extends HttpServlet {
     private static final long serialVersionUID = 154545L;
     //public User user;
@@ -28,36 +27,38 @@ public class SettingServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("Reached the GET Setting Servlet");
+        HttpSession session = request.getSession();
+        String email = (String) session.getAttribute("email");
+        String password = (String) session.getAttribute("password");
+        UserDao dao = new UserDao();
+        boolean isValidUser = dao.validateUser(email, password);
+
+        if (isValidUser) {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/setting.html");
         dispatcher.include(request, response);
+        doPost(request, response);
+        }
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("Reached the POST Setting Servlet!");
-        // Get User from the Context
-        User currentUser = (User)request.getServletContext().getAttribute("user");
+        // Get User from the Session
+        HttpSession session = request.getSession();
+        String oldEmail = (String) session.getAttribute("email");
 
         //collect data from form
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
-        //String newEmail = request.getParameter("email");
+        String newEmail = request.getParameter("newEmail");
         String phoneNum = request.getParameter("phoneNum");
-        String password = request.getParameter("password");
+        String newPassword = request.getParameter("newPassword");
 
-        ApplicationDao dao = new ApplicationDao();
-        //HttpSession session = request.getSession();
-        //String oldEmail = (String) session.getAttribute("email");
-
-        //user = dao.readUser(oldEmail);
-        //currentUser.editEmail(newEmail);
-        currentUser.editPassword(password);
-        currentUser.editFirstName(firstName);
-        currentUser.editLastName(lastName);
-        currentUser.editPhoneNumber(phoneNum);
+        //create new user dao and update the user
+        UserDao userDao = new UserDao();
+        int rows = userDao.updateUser(firstName, lastName, newEmail, phoneNum, newPassword, oldEmail);
         
-        int rows = dao.updateUser(currentUser);
         if(rows == 0) {
-            infoMessage = "Sorry, an error occurred.";
+            infoMessage = "Sorry, an update error occurred.";
         } else {
             infoMessage = "User account updated successfully!" ;
         }

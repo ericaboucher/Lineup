@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import beans.Guardian;
 import beans.User;
-import dao.ApplicationDao;
+import dao.UserDao;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -26,7 +26,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import beans.Guardian;
 import beans.User;
-import dao.ApplicationDao;
 
 @WebServlet (name="registrationServlet", urlPatterns={"/registrationServlet"})
 public class RegistrationServlet extends HttpServlet {
@@ -47,16 +46,11 @@ public class RegistrationServlet extends HttpServlet {
 		String firstName = request.getParameter("firstName");
 		String lastName = request.getParameter("lastName");
 		String phoneNum = request.getParameter("phoneNum");
-		
-//		System.out.println("Email: " + email);
-//		System.out.println("Password: " + password);
-//		System.out.println("User Type: " + userType);
-//		System.out.println("Name: " + firstName + " " + lastName);
-//		System.out.println("Phone Number: " + phoneNum);
 
 		if (userType.equals("Guardian")) {
+			//create user of type guardian
 			user = new Guardian(email, password, userType, firstName, lastName, phoneNum);
-	        ApplicationDao dao = new ApplicationDao();
+	        UserDao dao = new UserDao();
 	        int rows = dao.createUser(user);
 	        if(rows == 0) {
 	            infoMessage = "Sorry, an error occurred.";
@@ -67,8 +61,6 @@ public class RegistrationServlet extends HttpServlet {
 			//create Staff user
 			infoMessage = "Error. No way to create staff.";
 		}
-		
-		//save user to db
 
 		//write the message back to user
 		String page = getHTMLString(request.getServletContext().getRealPath("/register.html"), infoMessage);
@@ -88,9 +80,4 @@ public class RegistrationServlet extends HttpServlet {
 		page = MessageFormat.format(page, message);
 		return page;		
 	}
-
-//	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//	// TODO Auto-generated method stub
-//}
-
 }

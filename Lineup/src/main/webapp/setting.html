@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
@@ -22,30 +22,33 @@
 
     <p></p>
 
-    <form class="" action="/settingServlet" method="post">
+    <form class="" action="settingServlet" method="post">
       <label for="firstName"><b>First Name</b></label>
       <input type="text" name="firstName" id="firstName" placeholder="First Name"><br/>
 
       <label for="lastName"><b>Last Name</b></label>
       <input type="text" name="lastName" id="lastName" placeholder="Last Name"><br/>
 
-      <label for="email"><b>Email</b></label>
-      <input type="text" name="email" id="email" placeholder="Email"><br/>
+      <label for="newEmail"><b>Email</b></label>
+      <input type="text" name="newEmail" id="newEmail" placeholder="Email"><br/>
 
       <label for="phoneNum"><b>Phone Number</b></label>
-      <input type="text" name="phoneNum" id="phoneNum" placeholder="Phone Number"><br/>
+      <input type="text" name="phoneNum" id="phoneNum" placeholder="123-456-7890"><br/>
 
-      <label for="password"><b>Password</b></label>
-      <input type="password" name="password" id="password" placeholder="Password"><br/>
+      <label for="newPassword"><b>Password</b></label>
+      <input type="password" name="newPassword" id="newPassword" placeholder="Password"><br/>
 
       <input type="submit" name="update" id="update" value="Update">   
     </form>
     
     
- <a href="deleteServlet">Delete account?</a>
-    <!-- <form id="delete" action="/deleteServlet" method="post">
-    <input type="submit" name="delete" id="delete" value="Delete Account" />
-    </form> -->
+<!--  <a href="deleteServlet">Delete account?</a>
+ {0}--> 
+  <form id="delete" action="deleteServlet" method="get">
+    <input type="submit" name="delete" id="delete" value="Delete Account"
+   />
+     {0} 
+    </form> 
 
   </body>
 </html>
