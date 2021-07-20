@@ -3,7 +3,7 @@ package beans;
 import java.util.ArrayList;
 
 public class Guardian extends User {
-    private ArrayList<Integer> children;
+    private ArrayList<Student> children;
     
     // Constructors
     public Guardian() {
@@ -25,20 +25,30 @@ public class Guardian extends User {
         super(email, password, userType, firstName, lastName, phoneNum);
         initChildrenList();
     }
+    public Guardian(Guardian toCopy) {
+        super(toCopy);
+        this.children = toCopy.getChildren();
+    }
 
     // Modifiers
-    public boolean signChildIn(Integer child) {
-        return false;
+    public boolean signChildIn(Student child) {
+        return child.signIn();
     }
-    public boolean signChildOut(Integer child) {
-        return false;
+    public boolean signChildOut(Student child) {
+        return child.signOut();
     }
-    public boolean addChild(Integer child) {
+    public boolean addChild(Student child) {
         children.add(child);
         return true;
     }
+    
+    // Accessor
+    public ArrayList<Student>getChildren() {
+        return new ArrayList<Student>(children);
+    }
 
+    // Private helper method
     private void initChildrenList() {
-        children = new ArrayList<Integer>();
+        children = new ArrayList<Student>();
     }
 }

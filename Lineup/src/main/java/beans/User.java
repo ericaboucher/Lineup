@@ -22,6 +22,8 @@ public abstract class User {
         }
         this.password = password;
     }
+    
+    
     public User(String email, String password, String userType, String phoneNum) {
         this(email, password, userType);
         if(validatePhoneNumber(phoneNum)) {
@@ -46,6 +48,10 @@ public abstract class User {
         } else {
             //problem, but not fatal
         }
+    }
+    
+    public User(User toCopy) {
+        this(toCopy.getEmail(), toCopy.getPassword(), toCopy.getUserType(), toCopy.getFirstName(), toCopy.getLastName(), toCopy.getPhoneNum());
     }
     
     // Accessors

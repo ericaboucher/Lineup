@@ -13,40 +13,34 @@ import services.ApplicationService;
 
 public class UserDao implements ApplicationService {
 
-  @Override
-  public List<User> readUsers() {
-    User user = null;
-    List<User> users = new ArrayList<User>();
+	@Override
+	public List<User> readUsers() {
+		User user = null;
+		List<User> users = new ArrayList<User>();
 
     try{
+    	// get connection to database
+    	Connection conn = DBConnection.getConnectionToDatabase();
 
-      // get connection to database
-      Connection conn = DBConnection.getConnectionToDatabase();
+    	// sql query to get all users
+    	String sql = "select * from user;";
+    	PreparedStatement stmt = conn.prepareStatement(sql);
 
-      // sql query to get all users
-      String sql = "select * from user;";
-      PreparedStatement stmt = conn.prepareStatement(sql);
+    	// execute query , get resultset and return users
+    	ResultSet set = stmt.executeQuery();
 
-      // execute query , get resultset and return users
-      ResultSet set = stmt.executeQuery();
-
-      while (set.next()){
-
-        user = new Guardian();
-        user.editEmail(set.getString("email"));
-        user.editPassword(set.getString("password"));
-        user.setUserType(set.getString("userType"));
-        user.editFirstName(set.getString("firstName"));
-        user.editLastName(set.getString("lastName"));
-        user.editPhoneNumber(set.getString("phoneNum"));
-
-      }
-
-    }catch (SQLException exception){
-
-      exception.printStackTrace();
-
-    }
+    	while (set.next()){
+    		user = new Guardian();
+    		user.editEmail(set.getString("email"));
+    		user.editPassword(set.getString("password"));
+    		user.setUserType(set.getString("userType"));
+    		user.editFirstName(set.getString("firstName"));
+    		user.editLastName(set.getString("lastName"));
+    		user.editPhoneNumber(set.getString("phoneNum"));
+    	}
+    }	catch (SQLException exception){
+    		exception.printStackTrace();
+    	}
 
     return users;
   }
