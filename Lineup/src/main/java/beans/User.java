@@ -11,6 +11,7 @@ public abstract class User {
     // For determining user type
     public static final String GUARDIAN = "guardian";
     public static final String STAFF = "staff";
+    public static final String TEACHER = "teacher";
     
     //Constructors
     public User(String email, String password, String userType) {
