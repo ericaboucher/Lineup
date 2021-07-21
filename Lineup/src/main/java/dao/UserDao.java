@@ -9,11 +9,19 @@ import java.util.List;
 
 import beans.Guardian;
 import beans.User;
+import beans.Staff;
 
 public class UserDao {
+    
+    private static final String TABLE_NAME = "user";
+    private static final String COL_EMAIL = "email";
+    private static final String COL_PASSWORD = "password";
+    private static final String COL_USER_TYPE = "userType";
+    private static final String COL_FIRST_NAME = "firstName";
+    private static final String COL_LAST_NAME = "lastName";
+    private static final String COL_PHONE_NUM = "phoneNum";
 
     public static List<User> readUsers() {
-        User user = null;
         List<User> users = new ArrayList<User>();
 
         try{
@@ -21,20 +29,27 @@ public class UserDao {
             Connection conn = DBConnection.getConnectionToDatabase();
 
             // sql query to get all users
-            String sql = "select * from user;";
+            String sql = "select * from " + 
+                    TABLE_NAME + ";";
             PreparedStatement stmt = conn.prepareStatement(sql);
 
             // execute query , get resultset and return users
             ResultSet set = stmt.executeQuery();
 
             while (set.next()){
-                user = new Guardian();
-                user.editEmail(set.getString("email"));
-                user.editPassword(set.getString("password"));
-                user.setUserType(set.getString("userType"));
-                user.editFirstName(set.getString("firstName"));
-                user.editLastName(set.getString("lastName"));
-                user.editPhoneNumber(set.getString("phoneNum"));
+                String email = set.getString(COL_EMAIL);
+                String password = set.getString(COL_PASSWORD);
+                String userType = set.getString(COL_USER_TYPE);
+                String firstName = set.getString(COL_FIRST_NAME);
+                String lastName = set.getString(COL_LAST_NAME);
+                String phoneNum = set.getString(COL_PHONE_NUM);
+                if(userType.equals(User.GUARDIAN)) {
+                    users.add(new Guardian(email, password, firstName, lastName, phoneNum));
+                } else if (userType.equals(User.STAFF)) {
+                    users.add(new Staff(email, password, firstName, lastName, phoneNum));
+                } else {
+                    //invalid user type
+                }
             }
         }	catch (SQLException exception){
             exception.printStackTrace();
@@ -44,31 +59,32 @@ public class UserDao {
     }
 
     public static User readUser(String email) {
-
-        User user = null;
-
         try{
-
             // get connection to db
             Connection conn = DBConnection.getConnectionToDatabase();
 
             // query to get the user by email(Primary key)
-            String sql = "select * from user where email=?;";
+            String sql = "select * from " + 
+                    TABLE_NAME + " where " + 
+                    COL_EMAIL + "=?;";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, email);
 
             ResultSet set = stmt.executeQuery();
 
             while (set.next()){
-
-                user = new Guardian();
-                user.editEmail(set.getString("email"));
-                user.editPassword(set.getString("password"));
-                user.setUserType(set.getString("userType"));
-                user.editFirstName(set.getString("firstName"));
-                user.editLastName(set.getString("lastName"));
-                user.editPhoneNumber(set.getString("phoneNum"));
-
+                String password = set.getString(COL_PASSWORD);
+                String userType = set.getString(COL_USER_TYPE);
+                String firstName = set.getString(COL_FIRST_NAME);
+                String lastName = set.getString(COL_LAST_NAME);
+                String phoneNum = set.getString(COL_PHONE_NUM);
+                if(userType.equals(User.GUARDIAN)) {
+                    return new Guardian(email, password, firstName, lastName, phoneNum);
+                } else if (userType.equals(User.STAFF)) {
+                    return new Staff(email, password, firstName, lastName, phoneNum);
+                } else {
+                    //invalid user type
+                }
             }
 
         }catch (SQLException exception){
@@ -80,19 +96,24 @@ public class UserDao {
             exception.printStackTrace();
 
         }
-
-        return user;
+        return null;
     }
 
     public static int createUser(User user) {
         int rowsAffected = 0;
 
         try{
-
             Connection conn = DBConnection.getConnectionToDatabase();
 
             //insert query
-            String sql = "insert into user (email, password, userType, firstName, lastName, phoneNum) values (?, ?, ?, ?, ?, ?);";
+            String sql = "insert into " + 
+                    TABLE_NAME +  " (" + 
+                    COL_EMAIL + ", " + 
+                    COL_PASSWORD + ", " + 
+                    COL_USER_TYPE + ", " + 
+                    COL_FIRST_NAME + ", " + 
+                    COL_LAST_NAME + ", " + 
+                    COL_PHONE_NUM + ") values (?, ?, ?, ?, ?, ?);";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, user.getEmail());
@@ -103,16 +124,13 @@ public class UserDao {
             stmt.setString(6, user.getPhoneNum());
 
             rowsAffected = stmt.executeUpdate();
-
         }catch (SQLException exception){
             exception.printStackTrace();
 
         }catch (Exception exception){
             exception.printStackTrace();
         }
-
         return rowsAffected;
-
     }
 
     public static int updateUser(String firstName, String lastName, String newEmail, String phoneNum, String password,
@@ -122,11 +140,17 @@ public class UserDao {
         try{
             Connection conn = DBConnection.getConnectionToDatabase();
 
-            String sql = "update user set password=?, firstName=?, lastName=?, phoneNum=?, email=? where email=?;";
+            String sql = "update " + TABLE_NAME + " set " + 
+                    COL_PASSWORD +  "=?, " + 
+                    COL_FIRST_NAME +  "=?, " + 
+                    COL_LAST_NAME + "=?, " + 
+                    COL_PHONE_NUM + "=?, " + 
+                    COL_EMAIL + "=? where " + 
+                    COL_EMAIL + "=?;";
+            
             PreparedStatement stmt = conn.prepareStatement(sql);
 
             stmt.setString(1, password);
-            //stmt.setString(2, user.getUserType());
             stmt.setString(2, firstName);
             stmt.setString(3, lastName);
             stmt.setString(4, phoneNum);
@@ -149,7 +173,9 @@ public class UserDao {
         try{
             conn = DBConnection.getConnectionToDatabase();
 
-            String sql = "delete from user where email=?";
+            String sql = "delete from " + 
+                    TABLE_NAME + " where " + 
+                    COL_EMAIL + "=?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, email);
 
@@ -169,7 +195,10 @@ public class UserDao {
             Connection conn = DBConnection.getConnectionToDatabase();
 
             //select query
-            String sql = "select * from user where email=? and password=?";
+            String sql = "select * from " + 
+                    TABLE_NAME + " where " + 
+                    COL_EMAIL + "=? and " + 
+                    COL_PASSWORD + "=?";
 
             //set parameters with PreparedStatement
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -186,5 +215,4 @@ public class UserDao {
         }
         return isValidUser;
     }
-
 }

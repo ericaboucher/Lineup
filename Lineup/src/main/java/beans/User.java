@@ -13,7 +13,6 @@ public abstract class User {
     public static final String STAFF = "staff";
     
     //Constructors
-    public User() {}
     public User(String email, String password, String userType) {
         if(validateEmail(email)) {
             this.email = email;
