@@ -20,7 +20,6 @@ public class Student{
     
     // Used when creating a Student object from the database
     public Student(String studentId, String firstName, String lastName, String guardianEmail, boolean signedIn) {
-        //this(firstName, lastName, guardianEmail);
         this.studentId = UUID.fromString(studentId);
         this.firstName = firstName;
         this.lastName = lastName;
