@@ -3,7 +3,7 @@ package beans;
 import java.util.UUID;
 
 public class Student{
-	private UUID studentId;
+	private final UUID studentId;
     private final String firstName;
     private final String lastName;
     private final String guardianEmail;
@@ -20,8 +20,11 @@ public class Student{
     
     // Used when creating a Student object from the database
     public Student(String studentId, String firstName, String lastName, String guardianEmail, boolean signedIn) {
-        this(firstName, lastName, guardianEmail);
+        //this(firstName, lastName, guardianEmail);
         this.studentId = UUID.fromString(studentId);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.guardianEmail = guardianEmail;
         this.signedIn = signedIn;
     }
     
