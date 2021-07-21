@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.Guardian;
+import beans.Staff;
 import beans.User;
 import dao.UserDao;
 
@@ -36,16 +37,14 @@ public class RegistrationServlet extends HttpServlet {
         if (userType.equals("Guardian")) {
             //create user of type guardian
             user = new Guardian(email, password, firstName, lastName, phoneNum);
-            //UserDao dao = new UserDao();
-            int rows = UserDao.createUser(user);
-            if(rows == 0) {
-                infoMessage = "Sorry, an error occurred.";
-            } else {
-                infoMessage = "User created successfully! Verification email sent to " + user.getEmail();
-            }
-        } else {
+            infoMessage = createNewUser(user);
+        } else if (userType.equals("Staff")) {
             //create Staff user
-            infoMessage = "Error. No way to create staff.";
+            user = new Staff(email, password, firstName, lastName, phoneNum);
+            infoMessage = createNewUser(user);
+        } else {
+            // invalid user type
+            infoMessage = "Error. Invalid user type.";
         }
 
         //write the message back to user
@@ -65,5 +64,14 @@ public class RegistrationServlet extends HttpServlet {
         String page = buffer.toString();
         page = MessageFormat.format(page, message);
         return page;		
+    }
+    
+    private String createNewUser(User u) {
+        int rows = UserDao.createUser(u);
+        if(rows == 0) {
+            return "Sorry, an error occurred.";
+        } else {
+            return "User created successfully! Verification email sent to " + u.getEmail();
+        }
     }
 }
