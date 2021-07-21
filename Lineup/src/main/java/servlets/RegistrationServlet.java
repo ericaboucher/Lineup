@@ -14,19 +14,6 @@ import beans.Guardian;
 import beans.User;
 import dao.UserDao;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.text.MessageFormat;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import beans.Guardian;
-import beans.User;
-
 @WebServlet (name="registrationServlet", urlPatterns={"/registrationServlet"})
 public class RegistrationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

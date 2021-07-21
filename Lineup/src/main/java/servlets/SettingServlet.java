@@ -18,12 +18,11 @@ import dao.UserDao;
 public class SettingServlet extends HttpServlet {
 <<<<<<< Upstream, based on branch 'CapstoneProject' of https://github.com/ericaboucher/Lineup.git
     private static final long serialVersionUID = 154545L;
-    //public User user;
     public String infoMessage = null;
 =======
-    private static final long serialVersionUID = 154545L;
-    //public User user;
-    public String infoMessage = null;
+	private static final long serialVersionUID = 154545L;
+	//public User user;
+	public String infoMessage = null;
 >>>>>>> dbb2993 testing
 
     public SettingServlet() {
@@ -47,33 +46,33 @@ public class SettingServlet extends HttpServlet {
         }
     }
 =======
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Get User from the Context
-        User currentUser = (User)request.getServletContext().getAttribute("user");
-        
-        //collect data from form
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
-            String newEmail = request.getParameter("email");
-            String phoneNum = request.getParameter("phoneNum");
-            String password = request.getParameter("password");
-            
-            ApplicationDao dao = new ApplicationDao();
-            //HttpSession session = request.getSession();
-            //String oldEmail = (String) session.getAttribute("email");
-            
-            //user = dao.readUser(oldEmail);
-            currentUser.editEmail(newEmail);
-            currentUser.editPassword(password);
-            currentUser.editFirstName(firstName);
-            currentUser.editLastName(lastName);
-            currentUser.editPhoneNumber(phoneNum);
-            int rows = dao.updateUser(currentUser);
-                if(rows == 0) {
-                    infoMessage = "Sorry, an error occurred.";
-                } else {
-                    infoMessage = "User account updated successfully!" ;
-                }
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	    // Get User from the Context
+	    User currentUser = (User)request.getServletContext().getAttribute("user");
+	    
+		//collect data from form
+		String firstName = request.getParameter("firstName");
+		String lastName = request.getParameter("lastName");
+			String newEmail = request.getParameter("email");
+			String phoneNum = request.getParameter("phoneNum");
+			String password = request.getParameter("password");
+			
+			ApplicationDao dao = new ApplicationDao();
+			//HttpSession session = request.getSession();
+			//String oldEmail = (String) session.getAttribute("email");
+			
+			//user = dao.readUser(oldEmail);
+			currentUser.editEmail(newEmail);
+			currentUser.editPassword(password);
+			currentUser.editFirstName(firstName);
+			currentUser.editLastName(lastName);
+			currentUser.editPhoneNumber(phoneNum);
+			int rows = dao.updateUser(currentUser);
+				if(rows == 0) {
+					infoMessage = "Sorry, an error occurred.";
+				} else {
+					infoMessage = "User account updated successfully!" ;
+				}
 >>>>>>> dbb2993 testing
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -116,6 +115,6 @@ public class SettingServlet extends HttpServlet {
         String page = buffer.toString();
 
         page = MessageFormat.format(page, message);
-        return page;        
+        return page;		
     }
 }
