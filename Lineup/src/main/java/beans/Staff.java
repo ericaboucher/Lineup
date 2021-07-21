@@ -16,5 +16,6 @@ public class Staff extends User {
         this.employeeId = UUID.fromString(employeeId);
     }
     
+    // Accessor
     public String getEmployeeId() { return employeeId.toString(); }
 }

@@ -62,7 +62,7 @@ public abstract class User {
     public String getPassword() { return password; }
     
     // Modifiers
-    public void setUserType(String newType) { userType = newType; }
+    protected void setUserType(String newType) { userType = newType; }
     public void editFirstName(String newFirstName) { firstName = newFirstName; }
     public void editLastName(String newLastName) { lastName = newLastName; }
     public void editPassword(String newPassword) { password = newPassword; }
@@ -84,7 +84,6 @@ public abstract class User {
     // Verification
     public boolean verifyEmail(String e) { return e.equals(email); }
     public boolean logIn(String user, String password) {  return (user.equals(email) && password.equals(password)); }
-    //public boolean logOut() { return true; }
 
     // Data validation
     private static boolean validateEmail(String e) {
