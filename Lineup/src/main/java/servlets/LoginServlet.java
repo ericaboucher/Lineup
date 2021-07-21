@@ -1,6 +1,9 @@
 package servlets;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.text.MessageFormat;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -13,24 +16,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import beans.User;
-<<<<<<< Upstream, based on branch 'CapstoneProject' of https://github.com/ericaboucher/Lineup.git
 import dao.UserDao;
-=======
-import dao.ApplicationDao;
->>>>>>> dbb2993 testing
 
 @WebServlet(name = "loginServlet", urlPatterns = {"/loginServlet"})
 public class LoginServlet extends HttpServlet {
     private static final long serialVersionUID = 17871L;
+    public String errorMessage = null;
 
     public LoginServlet() {
         super();
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/index.html");
-        dispatcher.include(request, response);
-        
+       
         //collect data from login form 
         String email = request.getParameter("email");
         String password = request.getParameter("password");
@@ -39,7 +37,6 @@ public class LoginServlet extends HttpServlet {
         UserDao dao = new UserDao();
         boolean isValidUser = dao.validateUser(email, password); 
 
-<<<<<<< Upstream, based on branch 'CapstoneProject' of https://github.com/ericaboucher/Lineup.git
         //check to see if user is valid
         if(isValidUser) {
             //set up HTTP session
@@ -53,44 +50,31 @@ public class LoginServlet extends HttpServlet {
             //context.setAttribute("user", currentUser);
             request.getRequestDispatcher("/home.html").forward(request, response);
         } else {
-            String errorMessage = "Sorry, email or password is not valid. Please try again.";
-            request.setAttribute("error", errorMessage);
-            request.getRequestDispatcher("/index.html").forward(request, response);
+            errorMessage = "Sorry, email or password is not valid. Please try again.";
+            System.out.println(errorMessage);
+            String page = getHTMLString(request.getServletContext().getRealPath("/index.html"), errorMessage);
+            response.getWriter().write(page);
         }
     }
-=======
-		//check to see if user is valid
-		if(isValidUser) {
-			//set up HTTP session
-			//HttpSession session = request.getSession();
-		    ServletContext context = request.getServletContext();
->>>>>>> dbb2993 testing
 
-<<<<<<< Upstream, based on branch 'CapstoneProject' of https://github.com/ericaboucher/Lineup.git
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/index.html");
         dispatcher.include(request, response);
     }
-=======
-			//set username as attribute
-//			session.setAttribute("email", email);
-		    User currentUser = dao.readUser(email);
-		    context.setAttribute("user", currentUser);
-			request.getRequestDispatcher("/home.html").forward(request, response);		
-		} else {
-			String errorMessage = "Sorry, email or password is not valid. Please try again.";
-					request.setAttribute("error", errorMessage);
-					request.getRequestDispatcher("/index.html").forward(request, response);
-		}
+    
 
-	}
-
-
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/index.html");
-		dispatcher.include(request, response);
-	}
->>>>>>> dbb2993 testing
+    public String getHTMLString(String filePath, String message) throws IOException{
+        BufferedReader reader = new BufferedReader(new FileReader(filePath));
+        String line="";
+        StringBuffer buffer = new StringBuffer();
+        while((line=reader.readLine())!=null){
+            buffer.append(line);
+        }
+        reader.close();
+        
+        String page = buffer.toString();
+        page = MessageFormat.format(page, message);
+        return page;        
+    }
 }
 
