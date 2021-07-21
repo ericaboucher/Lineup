@@ -35,7 +35,7 @@ public class RegistrationServlet extends HttpServlet {
 
         if (userType.equals("Guardian")) {
             //create user of type guardian
-            user = new Guardian(email, password, userType, firstName, lastName, phoneNum);
+            user = new Guardian(email, password, firstName, lastName, phoneNum);
             //UserDao dao = new UserDao();
             int rows = UserDao.createUser(user);
             if(rows == 0) {
