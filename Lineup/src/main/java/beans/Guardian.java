@@ -2,6 +2,8 @@ package beans;
 
 import java.util.ArrayList;
 
+import dao.StudentDao;
+
 public class Guardian extends User {
     private ArrayList<Student> children;
     
@@ -49,6 +51,6 @@ public class Guardian extends User {
 
     // Private helper method
     private void initChildrenList() {
-        children = new ArrayList<Student>();
+        children = new ArrayList<Student>(StudentDao.readStudents(this.getEmail()));
     }
 }
