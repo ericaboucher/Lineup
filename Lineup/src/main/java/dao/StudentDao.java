@@ -46,6 +46,35 @@ public class StudentDao {
         }
         return students;
     }
+    
+    public static List<Student> readStudents(String guardianEmail) {
+        List<Student> students = new ArrayList<Student>();
+
+        try{
+            // get connection to database
+            Connection conn = DBConnection.getConnectionToDatabase();
+
+            // sql query to get all students
+            String sql = "select * from " + TABLE_NAME + " where " + COL_GUARDIAN_EMAIL + " =?;";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, guardianEmail);
+
+            // execute query and get the result set
+            ResultSet set = stmt.executeQuery();
+
+            while (set.next()){
+                String id = set.getString(COL_ID);
+                String firstName = set.getString(COL_FIRST_NAME);
+                String lastName = set.getString(COL_LAST_NAME);
+                boolean signedIn = set.getBoolean(COL_SIGNED_IN);
+                students.add(new Student(id, firstName, lastName, guardianEmail, signedIn));
+            }
+
+        }catch (SQLException exception){
+            exception.printStackTrace();
+        }
+        return students;
+    }
 
     public static Student readStudent(String id) {
         Student student = null;
