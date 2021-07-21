@@ -84,7 +84,9 @@ public class StudentDao {
             Connection conn = DBConnection.getConnectionToDatabase();
 
             // query to get the student by student ID (Primary key)
-            String sql = "select * from student where id=?;";
+            String sql = "select * from " + 
+                    TABLE_NAME + " where " + 
+                    COL_ID + "=?;";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, id.toString());
 
@@ -113,7 +115,13 @@ public class StudentDao {
             Connection conn = DBConnection.getConnectionToDatabase();
 
             //insert query
-            String sql = "insert into student (id, firstName, lastName, guardianEmail, signedIn) values (?, ?, ?, ?, ?);";
+            String sql = "insert into " + 
+                    TABLE_NAME + " (" + 
+                    COL_ID + ", " + 
+                    COL_FIRST_NAME + ", " + 
+                    COL_LAST_NAME + ", " + 
+                    COL_GUARDIAN_EMAIL + ", " + 
+                    COL_SIGNED_IN + ") values (?, ?, ?, ?, ?);";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, student.getId());
@@ -137,7 +145,13 @@ public class StudentDao {
         try{
             Connection conn = DBConnection.getConnectionToDatabase();
 
-            String sql = "update student set firstName=?, lastName=?, guardian=?, signedIn=? where id=?;";
+            String sql = "update " + 
+                    TABLE_NAME + " set " + 
+                    COL_FIRST_NAME + "=?, " + 
+                    COL_LAST_NAME + "=?, " + 
+                    COL_GUARDIAN_EMAIL + "=?, " + 
+                    COL_SIGNED_IN + "=? where " + 
+                    COL_ID + "=?;";
             PreparedStatement stmt = conn.prepareStatement(sql);
 
             stmt.setString(1, newFirstName);
@@ -160,7 +174,7 @@ public class StudentDao {
         try{
             Connection conn = DBConnection.getConnectionToDatabase();
 
-            String sql = "delete from student where id=?;";
+            String sql = "delete from " + TABLE_NAME + " where " + COL_ID + "=?;";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, id.toString());
 

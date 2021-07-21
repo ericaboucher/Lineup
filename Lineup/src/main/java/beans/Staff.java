@@ -1,20 +1,20 @@
 package beans;
 
+import java.util.UUID;
+
 public class Staff extends User {
-    // Constructors
-    public Staff(String email, String password) {
-        super(email, password, User.STAFF);
-    }
-    public Staff(String email, String password, String phoneNum) {
-        super(email, password, User.STAFF, phoneNum);
-    }
-    public Staff(String email, String password, String firstName, String lastName){
-        super(email, password, User.STAFF, firstName, lastName);
-    }
+    private final UUID employeeId;
+    
+    // Constructor, used when creating a completely new Staff member
     public Staff(String email, String password, String firstName, String lastName, String phoneNum) {
         super(email, password, User.STAFF, firstName, lastName, phoneNum);
+        employeeId = UUID.randomUUID();
     }
-    public Staff(Staff toCopy) {
-        super(toCopy);
+    // Constructor, used when loading a Staff member from the database
+    public Staff(String employeeId, String email, String password, String firstName, String lastName, String phoneNum) {
+        super(email, password, User.STAFF, firstName, lastName, phoneNum);
+        this.employeeId = UUID.fromString(employeeId);
     }
+    
+    public String getEmployeeId() { return employeeId.toString(); }
 }
