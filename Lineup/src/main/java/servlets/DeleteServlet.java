@@ -1,6 +1,5 @@
 package servlets;
 
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -15,27 +14,20 @@ import dao.UserDao;
 
 @WebServlet("/deleteServlet")
 public class DeleteServlet extends HttpServlet {
-<<<<<<< Upstream, based on branch 'CapstoneProject' of https://github.com/ericaboucher/Lineup.git
     private static final long serialVersionUID = 15642L;
     //public User user;
     public String infoMessage = null;
-=======
-	private static final long serialVersionUID = 15642L;
-	//public User user;
-	public String infoMessage = null;
-       
->>>>>>> dbb2993 testing
 
     public DeleteServlet() {
         super();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UserDao userDao = new UserDao();
+        //UserDao userDao = new UserDao();
         HttpSession session = request.getSession();
         String email = (String) session.getAttribute("email");
         
-        int rows = userDao.deleteUser(email);
+        int rows = UserDao.deleteUser(email);
         if(rows == 0) {
             infoMessage = "Sorry, a delete error occurred. User: " + email;
         } else {
@@ -66,7 +58,6 @@ public class DeleteServlet extends HttpServlet {
 //        response.getWriter().write(page);
     }
 
-<<<<<<< Upstream, based on branch 'CapstoneProject' of https://github.com/ericaboucher/Lineup.git
     public String getHTMLString(String filePath, String message) throws IOException{
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         String line="";
@@ -74,27 +65,11 @@ public class DeleteServlet extends HttpServlet {
         while((line=reader.readLine())!=null){
             buffer.append(line);
         }
-=======
-		
-		ApplicationDao dao = new ApplicationDao();
-		//HttpSession session = request.getSession();
-		//String email = (String) session.getAttribute("email");
-		//ervletContext context = request.getServletContext();
-		User currentUser = (User) request.getServletContext().getAttribute("user");
-		//user = dao.readUser(currentUseremail);
-		int rows = dao.deleteUser(currentUser.getEmail());
-			if(rows == 0) {
-				infoMessage = "Sorry, an error occurred.";
-			} else {
-				infoMessage = "User account deleted successfully!" ;
-			}
->>>>>>> dbb2993 testing
 
         reader.close();
         
         String page = buffer.toString();
         page = MessageFormat.format(page, message);
-        return page;		
+        return page;        
     }
 }
-
