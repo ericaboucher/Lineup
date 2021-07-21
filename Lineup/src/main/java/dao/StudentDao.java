@@ -7,10 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import beans.Guardian;
-import beans.User;
 import beans.Student;
-import services.ApplicationService;
 
 public class StudentDao {
 
@@ -21,8 +18,7 @@ public class StudentDao {
     private static final String COL_GUARDIAN_EMAIL = "guardian";
     private static final String COL_SIGNED_IN = "signedIn";
 
-    public List<Student> readStudents() {
-        Student student = null;
+    public static List<Student> readStudents() {
         List<Student> students = new ArrayList<Student>();
 
         try{
@@ -51,7 +47,7 @@ public class StudentDao {
         return students;
     }
 
-    public Student readStudent(String id) {
+    public static Student readStudent(String id) {
         Student student = null;
 
         try{
@@ -81,7 +77,7 @@ public class StudentDao {
         return student;
     }
 
-    public int createStudent(Student student) {
+    public static int createStudent(Student student) {
         int rowsAffected = 0;
 
         try{
@@ -106,7 +102,7 @@ public class StudentDao {
         return rowsAffected;
     }
 
-    public int updateStudent(String id, String newFirstName, String newLastName, String newGuardian, Boolean signedIn) {
+    public static int updateStudent(String id, String newFirstName, String newLastName, String newGuardian, Boolean signedIn) {
         int rowsAffected = 0;
 
         try{
@@ -130,7 +126,7 @@ public class StudentDao {
         return rowsAffected;
     }
 
-    public int deleteStudent(String id) {
+    public static int deleteStudent(String id) {
         int rowsAffected = 0;
         try{
             Connection conn = DBConnection.getConnectionToDatabase();
