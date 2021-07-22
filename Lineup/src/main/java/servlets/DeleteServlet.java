@@ -15,7 +15,6 @@ import dao.UserDao;
 @WebServlet("/deleteServlet")
 public class DeleteServlet extends HttpServlet {
     private static final long serialVersionUID = 15642L;
-    //public User user;
     public String infoMessage = null;
 
     public DeleteServlet() {
@@ -23,7 +22,6 @@ public class DeleteServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //UserDao userDao = new UserDao();
         HttpSession session = request.getSession();
         String email = (String) session.getAttribute("email");
         
