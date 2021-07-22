@@ -1,13 +1,20 @@
 package beans;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
-public class Student{
+import services.Observed;
+import services.Observer;
+
+public class Student implements Observed {
 	private final UUID studentId;
     private final String firstName;
     private final String lastName;
     private final String guardianEmail;
     private boolean signedIn;
+    
+    // Needed for the Observer pattern
+    private ArrayList<Observer> observerList;
     
     // Used when creating a new student from scratch
     public Student(String firstName, String lastName, String guardianEmail) {
@@ -16,6 +23,9 @@ public class Student{
         this.lastName = lastName;
         this.guardianEmail = guardianEmail;
         signedIn = false;
+        
+        // Initialize the observer list
+        observerList = new ArrayList<Observer>();
     }
     
     // Used when creating a Student object from the database
@@ -25,6 +35,9 @@ public class Student{
         this.lastName = lastName;
         this.guardianEmail = guardianEmail;
         this.signedIn = signedIn;
+        
+        // Initialize the observer list
+        observerList = new ArrayList<Observer>();
     }
     
     // Accessors
@@ -40,6 +53,7 @@ public class Student{
             return false;
         } else {
             signedIn = true;
+            sendUpdate();
             return true;
         }
     }
@@ -49,7 +63,25 @@ public class Student{
             return false;
         } else {
             signedIn = false;
+            sendUpdate();
             return true;
         }
     }
+
+	@Override
+	public void watch(Observer o) {
+		observerList.add(o);
+	}
+
+	@Override
+	public void unWatch(Observer o) {
+		observerList.remove(o);
+	}
+
+	@Override
+	public void sendUpdate() {
+		for (Observer o : observerList) {
+			o.update(this);
+		}
+	}
 }
