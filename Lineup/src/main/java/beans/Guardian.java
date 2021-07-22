@@ -16,12 +16,22 @@ public class Guardian extends User {
     public boolean signChildIn(Student child) {
         return child.signIn();
     }
+    public boolean signChildIn(String studentID) {
+    	return StudentDao.readStudent(studentID).signIn();
+    }
+    
     public boolean signChildOut(Student child) {
         return child.signOut();
     }
+    public boolean signChildOut(String studentID) {
+    	return StudentDao.readStudent(studentID).signOut();
+    }
+    
     public boolean addChild(Student child) {
-        children.add(child);
-        return true;
+    	return children.add(child);
+    }
+    public boolean addChild(String studentID) {
+    	return children.add(StudentDao.readStudent(studentID));
     }
     
     // Accessor
