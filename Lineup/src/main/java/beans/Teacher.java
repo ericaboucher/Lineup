@@ -36,6 +36,7 @@ public class Teacher extends Staff implements Observer {
     private void initClassList() {
     	students = new ArrayList<Student>(TaughtByDao.getClassList(this));
     }
+    
 	@Override
 	public void update(Student student) {
 		for (Student s : students) {
