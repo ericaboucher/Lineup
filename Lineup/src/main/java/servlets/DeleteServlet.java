@@ -35,27 +35,8 @@ public class DeleteServlet extends HttpServlet {
         }
         System.out.println(infoMessage);
         //write the message back to user
-        String page = getHTMLString(request.getServletContext().getRealPath("/setting.html"), infoMessage);
+        String page = getHTMLString(request.getServletContext().getRealPath("/html/setting.html"), infoMessage);
         response.getWriter().write(page);
-    }
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        ApplicationDao dao = new ApplicationDao();
-//        //HttpSession session = request.getSession();
-//        //String email = (String) session.getAttribute("email");
-//        //ervletContext context = request.getServletContext();
-//        User currentUser = (User) request.getServletContext().getAttribute("user");
-//        //user = dao.readUser(currentUseremail);
-//        
-//        int rows = dao.deleteUser(currentUser.getEmail());
-//        if(rows == 0) {
-//            infoMessage = "Sorry, an error occurred.";
-//        } else {
-//            infoMessage = "User account deleted successfully!" ;
-//        }
-//        //write the message back to user
-//        String page = getHTMLString(request.getServletContext().getRealPath("/setting.html"), infoMessage);
-//        response.getWriter().write(page);
     }
 
     public String getHTMLString(String filePath, String message) throws IOException{

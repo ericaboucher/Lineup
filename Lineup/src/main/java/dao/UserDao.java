@@ -215,4 +215,30 @@ public class UserDao {
         }
         return isValidUser;
     }
+    
+    public static boolean validateEmail(String email) {
+    	boolean isValidEmail = false;
+    	try {
+    		//get db connection
+    		Connection conn = DBConnection.getConnectionToDatabase();
+    		
+    		//select query
+    		String sql = "select * from " +
+    				TABLE_NAME + " where " +
+    				COL_EMAIL + "=?";
+    		
+    		//set parameters
+    		PreparedStatement stmt = conn.prepareStatement(sql);
+    		stmt.setString(1, email);
+    		
+    		ResultSet set = stmt.executeQuery();
+    		while(set.next()) {
+    			isValidEmail = true;
+    		}
+    	}
+    	catch(SQLException e) {
+            e.printStackTrace();
+        }
+    	return isValidEmail;
+    }
 }
