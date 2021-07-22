@@ -11,12 +11,12 @@ import beans.Student;
 
 public class StudentDao {
 
-    private static final String TABLE_NAME = "student";
-    private static final String COL_ID = "id";
-    private static final String COL_FIRST_NAME = "firstName";
-    private static final String COL_LAST_NAME = "lastName";
-    private static final String COL_GUARDIAN_EMAIL = "guardian";
-    private static final String COL_SIGNED_IN = "signedIn";
+    private static final String TABLE_NAME = "Students";
+    private static final String COL_ID = "StudentID";
+    private static final String COL_FIRST_NAME = "FirstName";
+    private static final String COL_LAST_NAME = "LastName";
+    private static final String COL_GUARDIAN_EMAIL = "GuardianEmail";
+    private static final String COL_SIGNED_IN = "SignedIn";
 
     public static List<Student> readStudents() {
         List<Student> students = new ArrayList<Student>();

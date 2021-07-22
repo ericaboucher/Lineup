@@ -13,13 +13,13 @@ import beans.Staff;
 
 public class UserDao {
     
-    private static final String TABLE_NAME = "user";
-    private static final String COL_EMAIL = "email";
-    private static final String COL_PASSWORD = "password";
-    private static final String COL_USER_TYPE = "userType";
-    private static final String COL_FIRST_NAME = "firstName";
-    private static final String COL_LAST_NAME = "lastName";
-    private static final String COL_PHONE_NUM = "phoneNum";
+    private static final String TABLE_NAME = "Users";
+    private static final String COL_EMAIL = "Email";
+    private static final String COL_PASSWORD = "UserPassword";
+    private static final String COL_USER_TYPE = "UserType";
+    private static final String COL_FIRST_NAME = "FirstName";
+    private static final String COL_LAST_NAME = "LastName";
+    private static final String COL_PHONE_NUM = "PhoneNum";
 
     public static List<User> readUsers() {
         List<User> users = new ArrayList<User>();

@@ -12,14 +12,14 @@ import beans.Student;
 import beans.Teacher;
 
 public class CourseDao {
-    private static final String TABLE_COURSES = "course";
-    private static final String COL_CODE = "code";
-    private static final String COL_SUBJECT = "subject";
-    private static final String COL_INSTRUCTOR = "instructorId";
+    private static final String TABLE_COURSES = "Courses";
+    private static final String COL_CODE = "CourseCode";
+    private static final String COL_SUBJECT = "CourseSubject";
+    private static final String COL_INSTRUCTOR = "InstructorID";
     
-    private static final String TABLE_ENROLLMENT = "enrollment";
-    private static final String COL_STUDENT_ID = "studentId";
-    private static final String COL_CLASS_CODE = "classCode";
+    private static final String TABLE_ENROLLMENT = "Enrollment";
+    private static final String COL_STUDENT_ID = "StudentID";
+    private static final String COL_CLASS_CODE = "CourseCode";
     
     public static List<Student> getEnrollment(String classCode) {
         List<Student> students = new ArrayList<Student>();

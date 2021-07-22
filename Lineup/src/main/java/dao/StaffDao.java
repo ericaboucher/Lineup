@@ -12,9 +12,9 @@ import beans.User;
 
 public class StaffDao {
 
-    private static final String TABLE_NAME = "staff";
-    private static final String COL_ID = "id";
-    private static final String COL_EMAIL= "email";
+    private static final String TABLE_NAME = "StaffMembers";
+    private static final String COL_ID = "EmployeeId";
+    private static final String COL_EMAIL= "Email";
 
     public static List<Staff> readAllStaff() {
         List<Staff> allStaff = new ArrayList<Staff>();
