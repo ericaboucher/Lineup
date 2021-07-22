@@ -3,7 +3,6 @@ package servlets;
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,15 +30,14 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         //call dao to validate user
-        UserDao dao = new UserDao();
-        boolean isValidUser = dao.validateUser(email, password); 
+        boolean isValidUser = UserDao.validateUser(email, password); 
 
         //check to see if user is valid
         if(isValidUser) {
             //set up HTTP session
             HttpSession session = request.getSession();
             //set username as attribute
-            User currentUser = dao.readUser(email);
+            User currentUser = UserDao.readUser(email);
             session.setAttribute("email", email);
             session.setAttribute("password", password);
             session.setAttribute("currentUser", currentUser);
