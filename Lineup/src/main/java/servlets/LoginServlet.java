@@ -1,8 +1,12 @@
 package servlets;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.text.MessageFormat;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,29 +34,41 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         //call dao to validate user
+        //UserDao dao = new UserDao();
         boolean isValidUser = UserDao.validateUser(email, password); 
+        //set up HTTP session
+        HttpSession session = request.getSession();
 
         //check to see if user is valid
         if(isValidUser) {
-            //set up HTTP session
-            HttpSession session = request.getSession();
             //set username as attribute
             User currentUser = UserDao.readUser(email);
             session.setAttribute("email", email);
             session.setAttribute("password", password);
             session.setAttribute("currentUser", currentUser);
             System.out.println("User " + email + " is logged in");
-            //context.setAttribute("user", currentUser);
             request.getRequestDispatcher("/home.html").forward(request, response);
         } else {
             String errorMessage = "Sorry, email or password is not valid. Please try again.";
-            request.setAttribute("error", errorMessage);
-            request.getRequestDispatcher("/index.html").forward(request, response);
+            //request.setAttribute("error", errorMessage);
+            //request.getRequestDispatcher("/index.html").forward(request, response);
+            //write the message back to user
+            String page = getHTMLString(request.getServletContext().getRealPath("/index.html"), errorMessage);
+            response.getWriter().write(page);
         }
     }
+        
+        public String getHTMLString(String filePath, String message) throws IOException{
+            BufferedReader reader = new BufferedReader(new FileReader(filePath));
+            String line="";
+            StringBuffer buffer = new StringBuffer();
+            while((line=reader.readLine())!=null){
+                buffer.append(line);
+            }
+            reader.close();
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/index.html");
-        dispatcher.include(request, response);
-    }
+            String page = buffer.toString();
+            page = MessageFormat.format(page, message);
+            return page;		
+        }
 }
