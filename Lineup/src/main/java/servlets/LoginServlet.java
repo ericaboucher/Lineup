@@ -33,7 +33,6 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         //call dao to validate user
-        //UserDao dao = new UserDao();
         boolean isValidUser = UserDao.validateUser(email, password); 
         //set up HTTP session
         HttpSession session = request.getSession();
@@ -49,8 +48,6 @@ public class LoginServlet extends HttpServlet {
             request.getRequestDispatcher("/home.html").forward(request, response);
         } else {
             String errorMessage = "Sorry, email or password is not valid. Please try again.";
-            //request.setAttribute("error", errorMessage);
-            //request.getRequestDispatcher("/index.html").forward(request, response);
             //write the message back to user
             String page = getHTMLString(request.getServletContext().getRealPath("/index.html"), errorMessage);
             response.getWriter().write(page);
