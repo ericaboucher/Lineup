@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.MessageFormat;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,9 +34,14 @@ public class DeleteServlet extends HttpServlet {
             infoMessage = "User account deleted successfully!" ;
         }
         System.out.println(infoMessage);
-        //write the message back to user
-        String page = getHTMLString(request.getServletContext().getRealPath("setting.html"), infoMessage);
-        response.getWriter().write(page);
+        //write the message back to user       
+        String destination = "/setting.jsp";
+        RequestDispatcher rd = request.getRequestDispatcher(destination);
+        request.setAttribute("infoMessage", infoMessage);
+        rd.forward(request, response);
+        
+        //String page = getHTMLString(request.getServletContext().getRealPath("setting.jsp"), infoMessage);
+        //response.getWriter().write(page);
     }
 
     public String getHTMLString(String filePath, String message) throws IOException{

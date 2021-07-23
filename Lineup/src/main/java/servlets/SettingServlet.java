@@ -32,7 +32,7 @@ public class SettingServlet extends HttpServlet {
         boolean isValidUser = UserDao.validateUser(email, password);
 
         if (isValidUser) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/setting.html");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/setting.jsp");
             dispatcher.include(request, response);
             doPost(request, response);
         }
@@ -60,9 +60,14 @@ public class SettingServlet extends HttpServlet {
             infoMessage = "User account updated successfully!" ;
         }
         System.out.println(infoMessage);
-        //write the message back to user
-        String page = getHTMLString(request.getServletContext().getRealPath("/setting.html"), infoMessage);
-        response.getWriter().write(page);
+        //write the message back to user        
+        String destination = "/setting.jsp";
+        RequestDispatcher rd = request.getRequestDispatcher(destination);
+        request.setAttribute("infoMessage", infoMessage);
+        rd.forward(request, response);
+        
+        //String page = getHTMLString(request.getServletContext().getRealPath("/setting.html"), infoMessage);
+        //response.getWriter().write(page);
     }
 
     public String getHTMLString(String filePath, String message) throws IOException{

@@ -1,3 +1,4 @@
+
 package servlets;
 
 import java.io.BufferedReader;
@@ -49,11 +50,19 @@ public class LoginServlet extends HttpServlet {
             System.out.println("User " + email + " is logged in");
             request.getRequestDispatcher("/home.html").forward(request, response);
         } else {
+        	//write the message back to user
             String errorMessage = "Sorry, email or password is not valid. Please try again.";
-            //write the message back to user
-            String page = getHTMLString(request.getServletContext().getRealPath("/index.html"), errorMessage);
-            response.getWriter().write(page);
+            String destination = "/index.jsp";
+            
+            RequestDispatcher rd = request.getRequestDispatcher(destination);
+            request.setAttribute("errorMessage", errorMessage);
+            rd.forward(request, response);
         }
+        
+            //String errorMessage = "Sorry, email or password is not valid. Please try again.";
+            //write the message back to user
+            //String page = getHTMLString(request.getServletContext().getRealPath("/index.html"), errorMessage);
+            //response.getWriter().write(page);
     }
         
     public String getHTMLString(String filePath, String message) throws IOException{

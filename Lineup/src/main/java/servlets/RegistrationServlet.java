@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.MessageFormat;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -47,15 +49,22 @@ public class RegistrationServlet extends HttpServlet {
             //create Staff user
             user = new Staff(email, password, firstName, lastName, phoneNum);
             UserDao.createUser(user);
-            infoMessage = "Staff user created successfully! Verification email sent to \" + user.getEmail()";
+            infoMessage = "Staff user created successfully! Verification email sent to " + user.getEmail();
         } else {
             // invalid user type
             infoMessage = "Error. Invalid user type.";
         }
 
         //write the message back to user
-        String page = getHTMLString(request.getServletContext().getRealPath("/register.html"), infoMessage);
-        response.getWriter().write(page);
+      	String destination = "/register.jsp";
+      		
+      	RequestDispatcher rd = request.getRequestDispatcher(destination);
+      	request.setAttribute("infoMessage", infoMessage);
+      	rd.forward(request, response);
+      		
+        //write the message back to user
+        //String page = getHTMLString(request.getServletContext().getRealPath("/register.html"), infoMessage);
+        //response.getWriter().write(page);
     }
 
     public String getHTMLString(String filePath, String message) throws IOException{
