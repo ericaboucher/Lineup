@@ -124,6 +124,7 @@ public class UserDao {
             stmt.setString(6, user.getPhoneNum());
 
             rowsAffected = stmt.executeUpdate();
+            
         }catch (SQLException exception){
             exception.printStackTrace();
 
