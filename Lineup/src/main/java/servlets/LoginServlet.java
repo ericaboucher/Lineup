@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import beans.Hash;
 import beans.User;
 import dao.UserDao;
 
@@ -25,13 +26,14 @@ public class LoginServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/index.html");
-        dispatcher.include(request, response);
 
         //collect data from login form 
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
+        Hash h = new Hash(password);
+        password = h.encrypt(password);
+        
         //call dao to validate user
         boolean isValidUser = UserDao.validateUser(email, password); 
         //set up HTTP session

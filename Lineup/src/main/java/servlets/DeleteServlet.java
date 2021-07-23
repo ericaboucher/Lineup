@@ -33,7 +33,7 @@ public class DeleteServlet extends HttpServlet {
         }
         System.out.println(infoMessage);
         //write the message back to user
-        String page = getHTMLString(request.getServletContext().getRealPath("/html/setting.html"), infoMessage);
+        String page = getHTMLString(request.getServletContext().getRealPath("setting.html"), infoMessage);
         response.getWriter().write(page);
     }
 
