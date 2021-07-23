@@ -56,17 +56,17 @@ public class LoginServlet extends HttpServlet {
         }
     }
         
-        public String getHTMLString(String filePath, String message) throws IOException{
-            BufferedReader reader = new BufferedReader(new FileReader(filePath));
-            String line="";
-            StringBuffer buffer = new StringBuffer();
-            while((line=reader.readLine())!=null){
-                buffer.append(line);
-            }
-            reader.close();
+    public String getHTMLString(String filePath, String message) throws IOException{
+    	BufferedReader reader = new BufferedReader(new FileReader(filePath));
+    	String line="";
+    	StringBuffer buffer = new StringBuffer();
+    	while((line=reader.readLine())!=null){
+    		buffer.append(line);
+    	}
+    	reader.close();
 
-            String page = buffer.toString();
-            page = MessageFormat.format(page, message);
-            return page;		
-        }
+    	String page = buffer.toString();
+    	page = MessageFormat.format(page, message);
+    	return page;		
+    }
 }

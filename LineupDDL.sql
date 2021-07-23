@@ -26,10 +26,22 @@ CREATE TABLE IF NOT EXISTS Students (
     SignedIn boolean
 );
 
-# DDL for the Enrollment table
+# DDL for the TaughtBy table
 CREATE TABLE IF NOT EXISTS TaughtBy (
 	StudentID varchar(32),
     TeacherID varchar(32),
     FOREIGN KEY (StudentID) REFERENCES Students(StudentID),
     FOREIGN KEY (TeacherID) REFERENCES StaffMembers(EmployeeID)
 );
+
+# Test data
+INSERT INTO Users VALUES
+	("johndoe@example.com", "testpassword", "guardian", "John", "Doe", "123-456-7890");
+INSERT INTO Users VALUES
+	("teacher@school.com", "teacherpassword", "teacher", "Jane", "O'Malley", "012-345-6789");
+INSERT INTO StaffMembers VALUES 
+	("123TestTeacher", "teacher@school.com");
+INSERT INTO Students VALUES
+	("123SampleStudent", "Jimmy", "Doe", "johndoe@example.com", false);
+INSERT INTO TaughtBy VALUES
+	("123SampleStudent", "123TestTeacher");
