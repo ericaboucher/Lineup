@@ -37,7 +37,7 @@
         </form>
       </div>
         <div class="">
-          <a href="forgotPassword.html">Forgot Password</a>
+          <a href="forgotPassword.jsp">Forgot Password</a>
         </div>
 
 <p> ${errorMessage} </p>

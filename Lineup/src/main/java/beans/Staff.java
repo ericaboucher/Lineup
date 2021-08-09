@@ -1,22 +1,30 @@
 package beans;
 
-import java.util.UUID;
+import dao.StaffDao;
 
 public class Staff extends User {
-    private final UUID employeeId;
+    private final Integer employeeId;
+    
+    // Used to assign IDs
+    private static int highestID;
     
     // Constructor, used when creating a completely new Staff member
     public Staff(String email, String password, String firstName, String lastName, String phoneNum) {
-        super(email, password, User.STAFF, firstName, lastName, phoneNum);
-        employeeId = UUID.randomUUID();
+        super(email, password, UserType.STAFF, firstName, lastName, phoneNum);
+        employeeId = newID();
     }
     // Constructor, used when loading a Staff member from the database
-    public Staff(String employeeId, String email, String password, String firstName, String lastName, String phoneNum) {
-        super(email, password, User.STAFF, firstName, lastName, phoneNum);
-        this.employeeId = UUID.fromString(employeeId);
+    public Staff(int employeeId, String email, String password, String firstName, String lastName, String phoneNum) {
+        super(email, password, UserType.STAFF, firstName, lastName, phoneNum);
+        this.employeeId = employeeId;
     }
     
     // Accessor
-    public String getEmployeeId() { return employeeId.toString(); }
-
+    public int getEmployeeId() { return employeeId; }
+    
+    // ID Generator
+    private static Integer newID() {
+        highestID = StaffDao.getHighestId();
+        return new Integer(++highestID);
+    }
 }

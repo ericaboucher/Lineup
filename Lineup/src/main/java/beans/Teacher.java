@@ -12,20 +12,20 @@ public class Teacher extends Staff implements Observer {
     // Constructor, used when creating a completely new Teacher
     public Teacher(String email, String password, String firstName, String lastName, String phoneNum) {
         super(email, password, firstName, lastName, phoneNum);
-        super.setUserType(User.TEACHER);
+        super.setUserType(UserType.TEACHER);
         initClassList();
     }
     // Constructor, used when loading a Teacher from the database
-    public Teacher(String employeeId, String email, String password, String firstName, String lastName, String phoneNum) {
+    public Teacher(int employeeId, String email, String password, String firstName, String lastName, String phoneNum) {
         super(employeeId, email, password, firstName, lastName, phoneNum);
-        super.setUserType(User.TEACHER);
+        super.setUserType(UserType.TEACHER);
         initClassList();
     }
     // Copy Constructor
-    public Teacher(Teacher toCopy) {
-        this(toCopy.getEmployeeId(), toCopy.getEmail(), toCopy.getPassword(), toCopy.getFirstName(), toCopy.getLastName(), toCopy.getPhoneNum());
-        students = toCopy.getClassList();
-    }
+//    public Teacher(Teacher toCopy) {
+//        this(toCopy.getEmployeeId(), toCopy.getEmail(), toCopy.getPassword(), toCopy.getFirstName(), toCopy.getLastName(), toCopy.getPhoneNum());
+//        students = toCopy.getClassList();
+//    }
     
     // Accessor
     public ArrayList<Student> getClassList() {
@@ -35,6 +35,9 @@ public class Teacher extends Staff implements Observer {
     // Private helper method
     private void initClassList() {
     	students = new ArrayList<Student>(TaughtByDao.getClassList(this));
+    	for(Student s : students) {
+    	    s.watch(this);
+    	}
     }
     
 	@Override

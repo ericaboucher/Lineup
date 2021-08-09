@@ -1,10 +1,6 @@
 package servlets;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-import java.text.MessageFormat;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -37,6 +33,7 @@ public class RegistrationServlet extends HttpServlet {
         String lastName = request.getParameter("lastName");
         String phoneNum = request.getParameter("phoneNum");     
 
+        //encrypt password
         Hash h = new Hash(password);
         password = h.encrypt(password);
         
@@ -56,28 +53,10 @@ public class RegistrationServlet extends HttpServlet {
         }
 
         //write the message back to user
-      	String destination = "/register.jsp";
-      		
+      	String destination = "/register.jsp";  		
       	RequestDispatcher rd = request.getRequestDispatcher(destination);
       	request.setAttribute("infoMessage", infoMessage);
       	rd.forward(request, response);
       		
-        //write the message back to user
-        //String page = getHTMLString(request.getServletContext().getRealPath("/register.html"), infoMessage);
-        //response.getWriter().write(page);
-    }
-
-    public String getHTMLString(String filePath, String message) throws IOException{
-        BufferedReader reader = new BufferedReader(new FileReader(filePath));
-        String line="";
-        StringBuffer buffer = new StringBuffer();
-        while((line=reader.readLine())!=null){
-            buffer.append(line);
-        }
-        reader.close();
-
-        String page = buffer.toString();
-        page = MessageFormat.format(page, message);
-        return page;		
     }
 }

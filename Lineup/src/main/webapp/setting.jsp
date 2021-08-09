@@ -12,7 +12,7 @@
     </div>
 
       <div class="topnav">
-        <a href="home.html">Home</a>
+        <a href="home.jsp">Home</a>
         <a href="setting.jsp">Settings</a>
         <a href="index.jsp">SignOut</a>
       </div>

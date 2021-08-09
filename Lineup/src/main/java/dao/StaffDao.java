@@ -13,7 +13,7 @@ import beans.User;
 public class StaffDao {
 
     private static final String TABLE_NAME = "StaffMembers";
-    private static final String COL_ID = "EmployeeId";
+    private static final String COL_EMPLOYEE_ID = "EmployeeID";
     private static final String COL_EMAIL= "Email";
 
     public static List<Staff> readAllStaff() {
@@ -31,7 +31,7 @@ public class StaffDao {
             ResultSet set = stmt.executeQuery();
 
             while (set.next()){
-                String id = set.getString(COL_ID);
+                int id = set.getInt(COL_EMPLOYEE_ID);
                 String email = set.getString(COL_EMAIL);
                 User u = UserDao.readUser(email);
                 allStaff.add(new Staff(id, u.getEmail(), u.getPassword(), u.getFirstName(), u.getLastName(), u.getPhoneNum()));
@@ -43,7 +43,7 @@ public class StaffDao {
         return allStaff;
     }
 
-    public static Staff readStaffMember(String id) {
+    public static Staff readStaffMember(int id) {
         Staff staffMember = null;
 
         try{
@@ -51,10 +51,10 @@ public class StaffDao {
             Connection conn = DBConnection.getConnectionToDatabase();
 
             // query to get the staff member by employee ID (Primary key)
-            String sql = "select * from " + TABLE_NAME + " where " + COL_ID + "=?;";
+            String sql = "select * from " + TABLE_NAME + " where " + COL_EMPLOYEE_ID + "=?;";
             
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, id.toString());
+            stmt.setInt(1, id);
 
             // execute query and get the result set
             ResultSet set = stmt.executeQuery();
@@ -71,6 +71,35 @@ public class StaffDao {
         }
         return staffMember;
     }
+    
+    public static int getHighestId() {
+        int id = 0;
+
+        try{
+            // get connection to db
+            Connection conn = DBConnection.getConnectionToDatabase();
+
+            // query to get the student by employee ID (Primary key)
+            String sql = "select " + COL_EMPLOYEE_ID + " from " + 
+                    TABLE_NAME + ";";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            // execute query and get the result set
+            ResultSet set = stmt.executeQuery();
+
+            while (set.next()){
+                int currID = set.getInt(COL_EMPLOYEE_ID);
+                if(currID > id) {
+                    id = currID;
+                }
+            }
+        }catch (SQLException exception){
+            exception.printStackTrace();
+        }catch (Exception exception){
+            exception.printStackTrace();
+        }
+        return id;
+    }
 
     public static int createStaffMember(Staff staffMember) {
         int rowsAffected = 0;
@@ -81,11 +110,11 @@ public class StaffDao {
             //insert query
             String sql = "insert into " + 
                     TABLE_NAME + " (" + 
-                    COL_ID + ", " + 
+                    COL_EMPLOYEE_ID + ", " + 
                     COL_EMAIL + ") values (?, ?);";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, staffMember.getEmployeeId());
+            stmt.setInt(1, staffMember.getEmployeeId());
             stmt.setString(2, staffMember.getEmail());
 
             rowsAffected = stmt.executeUpdate();
@@ -98,7 +127,7 @@ public class StaffDao {
         return rowsAffected;
     }
 
-    public static int updateStaffMember(String id, String newEmail) {
+    public static int updateStaffMember(int id, String newEmail) {
         int rowsAffected = 0;
 
         try{
@@ -107,11 +136,11 @@ public class StaffDao {
             String sql = "update " + 
                     TABLE_NAME + " set " + 
                     COL_EMAIL + "=? where " + 
-                    COL_ID + "=?;";
+                    COL_EMPLOYEE_ID + "=?;";
             
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, newEmail);
-            stmt.setString(2, id);
+            stmt.setInt(2, id);
 
             rowsAffected = stmt.executeUpdate();
         }catch (SQLException exception){
@@ -122,14 +151,14 @@ public class StaffDao {
         return rowsAffected;
     }
 
-    public static int deleteStaffMember(String id) {
+    public static int deleteStaffMember(int id) {
         int rowsAffected = 0;
         try{
             Connection conn = DBConnection.getConnectionToDatabase();
 
-            String sql = "delete from " + TABLE_NAME + " where " + COL_ID + "=?;";
+            String sql = "delete from " + TABLE_NAME + " where " + COL_EMPLOYEE_ID + "=?;";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, id.toString());
+            stmt.setInt(1, id);
 
             rowsAffected = stmt.executeUpdate();
             

@@ -1,11 +1,7 @@
 
 package servlets;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-import java.text.MessageFormat;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,6 +28,7 @@ public class LoginServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
+        //encrypt password
         Hash h = new Hash(password);
         password = h.encrypt(password);
         
@@ -48,34 +45,16 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("password", password);
             session.setAttribute("currentUser", currentUser);
             System.out.println("User " + email + " is logged in");
-            request.getRequestDispatcher("/home.html").forward(request, response);
+            request.getRequestDispatcher("/home.jsp").forward(request, response);
         } else {
         	//write the message back to user
             String errorMessage = "Sorry, email or password is not valid. Please try again.";
-            String destination = "/index.jsp";
-            
+            String destination = "/index.jsp";           
             RequestDispatcher rd = request.getRequestDispatcher(destination);
             request.setAttribute("errorMessage", errorMessage);
             rd.forward(request, response);
         }
         
-            //String errorMessage = "Sorry, email or password is not valid. Please try again.";
-            //write the message back to user
-            //String page = getHTMLString(request.getServletContext().getRealPath("/index.html"), errorMessage);
-            //response.getWriter().write(page);
     }
-        
-    public String getHTMLString(String filePath, String message) throws IOException{
-    	BufferedReader reader = new BufferedReader(new FileReader(filePath));
-    	String line="";
-    	StringBuffer buffer = new StringBuffer();
-    	while((line=reader.readLine())!=null){
-    		buffer.append(line);
-    	}
-    	reader.close();
 
-    	String page = buffer.toString();
-    	page = MessageFormat.format(page, message);
-    	return page;		
-    }
 }

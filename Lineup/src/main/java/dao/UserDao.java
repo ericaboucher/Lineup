@@ -9,6 +9,7 @@ import java.util.List;
 
 import beans.Guardian;
 import beans.User;
+import beans.User.UserType;
 import beans.Staff;
 
 public class UserDao {
@@ -43,9 +44,9 @@ public class UserDao {
                 String firstName = set.getString(COL_FIRST_NAME);
                 String lastName = set.getString(COL_LAST_NAME);
                 String phoneNum = set.getString(COL_PHONE_NUM);
-                if(userType.equals(User.GUARDIAN)) {
+                if(userType.equalsIgnoreCase(UserType.GUARDIAN.toString())) {
                     users.add(new Guardian(email, password, firstName, lastName, phoneNum));
-                } else if (userType.equals(User.STAFF)) {
+                } else if (userType.equalsIgnoreCase(UserType.STAFF.toString())) {
                     users.add(new Staff(email, password, firstName, lastName, phoneNum));
                 } else {
                     //invalid user type
@@ -78,9 +79,9 @@ public class UserDao {
                 String firstName = set.getString(COL_FIRST_NAME);
                 String lastName = set.getString(COL_LAST_NAME);
                 String phoneNum = set.getString(COL_PHONE_NUM);
-                if(userType.equals(User.GUARDIAN)) {
+                if(userType.equalsIgnoreCase(UserType.GUARDIAN.toString())) {
                     return new Guardian(email, password, firstName, lastName, phoneNum);
-                } else if (userType.equals(User.STAFF)) {
+                } else if (userType.equalsIgnoreCase(UserType.STAFF.toString())) {
                     return new Staff(email, password, firstName, lastName, phoneNum);
                 } else {
                     //invalid user type
@@ -118,13 +119,12 @@ public class UserDao {
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, user.getEmail());
             stmt.setString(2, user.getPassword());
-            stmt.setString(3, user.getUserType());
+            stmt.setString(3, user.getUserType().toString());
             stmt.setString(4, user.getFirstName());
             stmt.setString(5, user.getLastName());
             stmt.setString(6, user.getPhoneNum());
 
             rowsAffected = stmt.executeUpdate();
-            
         }catch (SQLException exception){
             exception.printStackTrace();
 

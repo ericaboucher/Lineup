@@ -33,12 +33,12 @@ public class StudentDao {
             ResultSet set = stmt.executeQuery();
 
             while (set.next()){
-                String id = set.getString(COL_ID);
+                int id = set.getInt(COL_ID);
                 String firstName = set.getString(COL_FIRST_NAME);
                 String lastName = set.getString(COL_LAST_NAME);
                 String guardianEmail = set.getString(COL_GUARDIAN_EMAIL);
                 boolean signedIn = set.getBoolean(COL_SIGNED_IN);
-                students.add(new Student(id, firstName, lastName, guardianEmail, signedIn));
+                students.add(new Student(new Integer(id), firstName, lastName, guardianEmail, signedIn));
             }
 
         }catch (SQLException exception){
@@ -67,7 +67,7 @@ public class StudentDao {
                 String firstName = set.getString(COL_FIRST_NAME);
                 String lastName = set.getString(COL_LAST_NAME);
                 boolean signedIn = set.getBoolean(COL_SIGNED_IN);
-                students.add(new Student(id, firstName, lastName, guardianEmail, signedIn));
+                students.add(new Student(new Integer(id), firstName, lastName, guardianEmail, signedIn));
             }
 
         }catch (SQLException exception){
@@ -76,7 +76,7 @@ public class StudentDao {
         return students;
     }
 
-    public static Student readStudent(String id) {
+    public static Student readStudent(Integer id) {
         Student student = null;
 
         try{
@@ -98,7 +98,7 @@ public class StudentDao {
                 String lastName = set.getString(COL_LAST_NAME);
                 String guardianEmail = set.getString(COL_GUARDIAN_EMAIL);
                 boolean signedIn = set.getBoolean(COL_SIGNED_IN);
-                student = new Student(id, firstName, lastName, guardianEmail, signedIn);
+                student = new Student(new Integer(id), firstName, lastName, guardianEmail, signedIn);
             }
         }catch (SQLException exception){
             exception.printStackTrace();
@@ -106,6 +106,35 @@ public class StudentDao {
             exception.printStackTrace();
         }
         return student;
+    }
+    
+    public static int getHighestId() {
+        int id = 0;
+
+        try{
+            // get connection to db
+            Connection conn = DBConnection.getConnectionToDatabase();
+
+            // query to get the student by student ID (Primary key)
+            String sql = "select " + COL_ID + " from " + 
+                    TABLE_NAME + ";";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            // execute query and get the result set
+            ResultSet set = stmt.executeQuery();
+
+            while (set.next()){
+                int currID = set.getInt(COL_ID);
+                if(currID > id) {
+                    id = currID;
+                }
+            }
+        }catch (SQLException exception){
+            exception.printStackTrace();
+        }catch (Exception exception){
+            exception.printStackTrace();
+        }
+        return id;
     }
 
     public static int createStudent(Student student) {
@@ -124,7 +153,7 @@ public class StudentDao {
                     COL_SIGNED_IN + ") values (?, ?, ?, ?, ?);";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, student.getId());
+            stmt.setInt(1, student.getId());
             stmt.setString(2, student.getFirstName());
             stmt.setString(3, student.getLastName());
             stmt.setString(4, student.getGuardianEmail());
@@ -139,7 +168,7 @@ public class StudentDao {
         return rowsAffected;
     }
 
-    public static int updateStudent(String id, String newFirstName, String newLastName, String newGuardian, Boolean signedIn) {
+    public static int updateStudent(int id, String newFirstName, String newLastName, String newGuardian, boolean signedIn) {
         int rowsAffected = 0;
 
         try{
@@ -158,7 +187,7 @@ public class StudentDao {
             stmt.setString(2, newLastName);
             stmt.setString(3, newGuardian);
             stmt.setBoolean(4, signedIn);
-            stmt.setString(5, id);
+            stmt.setInt(5, id);
 
             rowsAffected = stmt.executeUpdate();
         }catch (SQLException exception){
@@ -169,14 +198,14 @@ public class StudentDao {
         return rowsAffected;
     }
 
-    public static int deleteStudent(String id) {
+    public static int deleteStudent(int id) {
         int rowsAffected = 0;
         try{
             Connection conn = DBConnection.getConnectionToDatabase();
 
             String sql = "delete from " + TABLE_NAME + " where " + COL_ID + "=?;";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, id.toString());
+            stmt.setInt(1, id);
 
             rowsAffected = stmt.executeUpdate();
         }catch (SQLException exception){

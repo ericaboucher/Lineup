@@ -1,15 +1,19 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Forgot Password</title>
+        <link rel="stylesheet" href="styles.css" type="text/css">
   </head>
   <nav style="margin-bottom: 50px">
     <div class="logo">
         <a href="#" type="image"></a>
     </div>
       <div class="topnav">
-        <a href="index.html">Login</a>
+        <a href="index.jsp">Login</a>
       </div>
   </nav>
 <body>
@@ -20,7 +24,7 @@
           <input type="text" name="email" id="email" placeholder="Email" required>
       <input type="submit" name="forgotPassword" value="Send me my Password!">
     </form>
-    {0}
+<p> ${infoMessage} </p>
 
 </body>
 </html>

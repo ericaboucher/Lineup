@@ -28,13 +28,13 @@ public class TaughtByDao {
                     TABLE_NAME + " where " + 
                     COL_TEACHER_ID + " =?;";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, teacher.getEmployeeId());
+            stmt.setInt(1, teacher.getEmployeeId());
 
             // execute query and get the result set
             ResultSet set = stmt.executeQuery();
 
             while (set.next()){
-                Student s = StudentDao.readStudent(set.getString(COL_STUDENT_ID));
+                Student s = StudentDao.readStudent(set.getInt(COL_STUDENT_ID));
                 students.add(s);
             }
 
@@ -57,8 +57,8 @@ public class TaughtByDao {
                     COL_TEACHER_ID + ") values (?, ?);";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, student.getId());
-            stmt.setString(2, teacher.getEmployeeId());
+            stmt.setInt(1, student.getId());
+            stmt.setInt(2, teacher.getEmployeeId());
 
             rowsAffected = stmt.executeUpdate();
         }catch (SQLException exception){
@@ -79,8 +79,8 @@ public class TaughtByDao {
             		COL_STUDENT_ID + "=? and " + 
             		COL_TEACHER_ID + " =?;";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, student.getId());
-            stmt.setString(2, teacher.getEmployeeId());
+            stmt.setInt(1, student.getId());
+            stmt.setInt(2, teacher.getEmployeeId());
 
             rowsAffected = stmt.executeUpdate();
         }catch (SQLException exception){
